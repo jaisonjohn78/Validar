@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>|| Validar ||</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="public/assets/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="public/assets/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="public/assets/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="public/assets/img/favicons/favicon.ico">
+    <link rel="manifest" href="assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="public/assets/img/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
+    <link href="public/assets/css/theme.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+    <style>
+
+      .star {
+        position: absolute;
+        z-index: 10;
+        top: 0px;
+        left: 0px;
+
+      }
+
+
+      .wrapper{
+  /* display: flex; */
+  position: relative;
+  top: -10vh;
+  text-align: left;
+  font-size: 3rem !important;
+  -webkit-text-stroke: 0.5px rgb(75, 75, 75);
+  line-height: 40px !important;
+}
+.wrapper .static-txt{
+  color: #fff;
+  font-size: 3rem !important;
+  font-weight: 400;
+}
+.wrapper .dynamic-txts{
+  margin-left: 0px;
+  height: 90px;
+  line-height: 90px;
+  overflow: hidden;
+}
+.dynamic-txts li{
+  list-style: none;
+  color: #ffffff;
+  font-size: 3rem !important;
+  font-weight: 500;
+  position: relative;
+  top: 0px;
+  animation: slide 12s steps(4) infinite;
+}
+@keyframes slide {
+  100%{
+    top: -360px;
+  }
+}
+.dynamic-txts li span{
+  position: relative;
+  margin: 5px 0;
+  line-height: 90px;
+}
+.dynamic-txts li span::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 150%;
+  width: 180%;
+  background: #f7a08100;
+  border-left: 5px solid #ff656500;
+  /* animation: typing 3s steps(10) infinite; */
+}
+@keyframes typing {
+  40%, 60%{
+    left: calc(100% + 30px);
+  }
+  100%{
+    /* transform: rotateZ(180deg); */
+    left: 0;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .wrapper {
+    font-size: 2rem !important;
+    margin-top: 3rem;
+  }
+  .wrapper .static-txt{
+  font-size: 2rem !important;
+}
+.dynamic-txts li{
+  font-size: 2rem !important;
+}
+
+}
+
+    </style>
+  </head>
+
+
+  <body>
+      <!-- <img src="public/assets/img/illustrations/star.png" alt="" class="star" width="100"> -->
+  
+
+    <main class="main" id="top">
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-4 d-block" data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><a class="navbar-brand" href="index.html"><img src="public/assets/img/gallery/logo.png" height="24" alt="..." /></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
+          <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
+              <li class="nav-item px-2" data-anchor="data-anchor"><a class="nav-link fw-medium active" aria-current="page" href="#home">Home</a></li>
+              <li class="nav-item px-2" data-anchor="data-anchor"><a class="nav-link" href="#aboutUs">About us</a></li>
+              <!-- <li class="nav-item px-2" data-anchor="data-anchor"><a class="nav-link" href="#clients">Clients</a></li> -->
+              <li class="nav-item px-2" data-anchor="data-anchor"><a class="nav-link" href="#contact">Contact</a></li>
+              <li class="nav-item px-2" data-anchor="data-anchor"><a class="nav-link" href="#faq">Faq</a></li>
+
+            </ul>
+            <form class="ps-lg-5"><a class="btn btn-primary order-1 order-lg-0" href="./public/index.php">Register / Login</a></form>
+
+          </div>
+        </div>
+      </nav>
+      <section id="home"  class="animation">
+        <div class="bg-holder" style="background-image:url(public/assets/img/gallery/header-bg.png);background-position:center;background-size:cover;">
+        </div>
+        <!--/.bg-holder-->
+
+        <div class="container">
+          <div class="row align-items-center min-vh-50 min-vh-sm-100">
+            <div class="col-md-7 col-lg-6 text-md-start text-center">
+              <!-- <h1 class="text-light fs-6 fs-xl-8 font-cursive fw-normal mb-5" style="text-align: left; font-size: 3rem !important;">Buy What is <br />correct.</h1><a class="btn btn-primary" href="#" role="button">GET STARTED
+                <svg class="bi bi-arrow-right" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                </svg></a> -->
+
+                <div class="wrapper">
+                  <div class="static-txt">Buy or sell What </div>
+                  <ul class="dynamic-txts">
+                    <li><span>is Correct</span></li>
+                    <li><span>is Original</span></li>
+                    <li><span>is worth</span></li>
+                    <li><span>is appropiate</span></li>
+                  </ul>
+                </div>
+
+              </div>
+          </div>
+        </div>
+      </section>
+
+
+
+      <section id="aboutUs">
+
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center mb-6 mb-md-0 order-0 order-md-1"><img class="w-100" src="public/assets/img/gallery/about-us.png" alt="..." /></div>
+            <div class="col-md-6 text-center text-md-start mb-6">
+              <h4 class="text-danger">ABOUT US</h4>
+              <p class="my-5 fs-1 pe-xl-8">
+                VALIDAR  assist you in analysing and validating your product before to purchase to ensure that it is not tampered with and that everything is in order.</p>
+              <div class="card card-span bg-soft-primary border-start border-primary border-5 mt-3">
+                <div class="card-body">
+                  <h4 class="lh-base px-lg-5 py-3">
+                    Before you buy something, be sure you know what you're getting.
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+ 
+
+
+
+
+      <section>
+
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center mb-6 mb-md-0"><img class="w-100" src="public/assets/img/gallery/how-to-apply.png" alt="..." /></div>
+            <div class="col-md-6 text-center text-md-start mb-6 px-4">
+              <h4 class="text-danger text-uppercase">How will VALIDAR help ?</h4>
+              <p class="my-5 fs-1 pe-xl-7">
+                Whether you're a <b>manufacturer, retailer or customer</b>, VALIDAR makes it easy to keep track of daily sales, purchases, statistics, and reviews.
+
+                VALIDAR ensures the authenticity of your items whether you sell or inspect them.  
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+
+
+      <section class="bg-primary-gradient" id="faq">
+        <div class="bg-holder" style="background-image:url(public/assets/img/gallery/faq-bg.png);background-position:right;background-size:contain;">
+        </div>
+        <!--/.bg-holder-->
+
+        <div class="container">
+          <div class="row flex-center">
+            <div class="col-md-6">
+              <h4 class="text-danger text-uppercase">faq</h4>
+              <h1 class="font-cursive fw-normal mb-5">Questions and Answers <br class="d-none d-lg-block" />on VALIDAR:</h1>
+            </div>
+            <div class="col-md-6"><img class="w-100" src="public/assets/img/gallery/faq.png" alt="..." /></div>
+          </div>
+          <div class="row flex-center py-4">
+            <div class="col-md-6">
+              <div class="accordion" id="accordionExample1">
+                <div class="accordion-item mb-2 rounded overflow-hidden">
+                  <h2 class="accordion-header" id="heading1">
+                    <button class="accordion-button px-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1"><span class="mb-0 text-start fs-0 text-900 fw-medium">What is Validar ?</span></button>
+                  </h2>
+                  <div class="accordion-collapse collapse show" id="collapse1" aria-labelledby="heading1" data-bs-parent="#accordionExample">
+                    <div class="accordion-body bg-primary-gradient px-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, nobis? Commodi possimus neque quo at quidem eos ut ea eius nobis, cumque sunt velit doloribus vero exercitationem sint a cum?.</div>
+                  </div>
+                </div>
+                <div class="accordion-item mb-2 rounded overflow-hidden">
+                  <h2 class="accordion-header" id="heading2">
+                    <button class="accordion-button px-4 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2"><span class="mb-0 text-start fs-0 text-900 fw-medium">How to check the traffic condition?</span></button>
+                  </h2>
+                  <div class="accordion-collapse collapse" id="collapse2" aria-labelledby="heading2" data-bs-parent="#accordionExample">
+                    <div class="accordion-body bg-primary-gradient px-4">You can issue either partial or full refunds. There are no fees to refund a charge, but the fees from the original charge are not returned.</div>
+                  </div>
+                </div>
+                <div class="accordion-item mb-2 rounded overflow-hidden">
+                  <h2 class="accordion-header" id="heading3">
+                    <button class="accordion-button px-4 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="true" aria-controls="collapse3"><span class="mb-0 text-start fs-0 text-900 fw-medium">What are the requirements ?</span></button>
+                  </h2>
+                  <div class="accordion-collapse collapse" id="collapse3" aria-labelledby="heading3" data-bs-parent="#accordionExample">
+                    <div class="accordion-body bg-primary-gradient px-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi, accusantium! Maiores impedit perferendis tempore iure deleniti voluptatum libero. Tempora recusandae quam odio officia ab architecto maxime accusantium! Nulla, dolorem provident!</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="accordion" id="accordionExample2">
+                <div class="accordion-item mb-2 rounded overflow-hidden">
+                  <h2 class="accordion-header" id="heading6">
+                    <button class="accordion-button px-4 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="true" aria-controls="collapse6"><span class="mb-0 text-start fs-0 text-900 fw-medium">Where to look for ?</span></button>
+                  </h2>
+                  <div class="accordion-collapse collapse" id="collapse6" aria-labelledby="heading6" data-bs-parent="#accordionExample">
+                    <div class="accordion-body bg-primary-gradient px-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Et esse ab suscipit. Illum aspernatur quia tenetur quos asperiores facere officiis accusantium culpa. Facilis illum maxime tempora culpa illo animi error.</div>
+                  </div>
+                </div>
+                <div class="accordion-item mb-2 rounded overflow-hidden">
+                  <h2 class="accordion-header" id="heading7">
+                    <button class="accordion-button px-4 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="true" aria-controls="collapse7"><span class="mb-0 text-start fs-0 text-900 fw-medium">What will be the differences ?</span></button>
+                  </h2>
+                  <div class="accordion-collapse collapse" id="collapse7" aria-labelledby="heading7" data-bs-parent="#accordionExample">
+                    <div class="accordion-body bg-primary-gradient px-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident unde et voluptatum facere quos perferendis aperiam eum mollitia nihil voluptas? A explicabo dicta minima aspernatur quia earum nesciunt suscipit labore?</div>
+                  </div>
+                </div>
+                <div class="accordion-item mb-2 rounded overflow-hidden">
+                  <h2 class="accordion-header" id="heading8">
+                    <button class="accordion-button px-4 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="true" aria-controls="collapse8"><span class="mb-0 text-start fs-0 text-900 fw-medium">How much does it cost?</span></button>
+                  </h2>
+                  <div class="accordion-collapse collapse" id="collapse8" aria-labelledby="heading8" data-bs-parent="#accordionExample">
+                    <div class="accordion-body bg-primary-gradient px-4">There are no additional fees for using our services</div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+<!-- Testimonial  -->
+      <!-- <section id="clients">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-11 col-lg-6 col-xl-4 col-xxl-3">
+              <h4 class="text-danger text-uppercase">Testimonial</h4>
+              <h1 class="font-cursive fw-normal mb-5">Our Awesome <br />Clients </h1>
+            </div>
+            <div class="col-xxl-9">
+              <div class="position-relative offset-9 offset-sm-10 offset-lg-11 mb-3"><a class="carousel-control-prev carousel-icon z-index-2" href="#carouselExampleDark" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></a><a class="carousel-control-next carousel-icon z-index-2" href="#carouselExampleDark" role="button" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></a></div>
+              <div class="carousel slide" id="carouselExampleDark" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="10000">
+                    <div class="row h-100 mx-1 mb-5 mt-3 gx-md-2 gx-lg-4">
+                      <div class="col-md-4 mb-5 mb-md-0">
+                        <div class="card card-span h-100 shadow-primary">
+                          <div class="card-body my-3">
+                            <p class="mb-0 px-3 px-md-2 px-xxl-3">Yes, you will need to have the land owner sign the permit application as the Permittee, and you sign the permit as the Applicant or Agent for the Permittee.</p>
+                            <div class="align-items-xl-center d-block d-xl-flex px-3 mt-3 align-self-end"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/isak.png" width="50" alt="" />
+                              <div class="flex-1 align-items-center pt-2">
+                                <h6 class="mb-0">Isak Pettersson</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-5 mb-md-0">
+                        <div class="card card-span h-100 shadow-primary">
+                          <div class="card-body my-3">
+                            <p class="mb-0 px-3 px-md-2 px-xxl-3">From most barricade or traffic control companies located in the phone book. They employ certified Traffic Control Supervisors (TCS) who can generate and certify the traffic control plan. </p>
+                            <div class="align-items-xl-center d-block d-xl-flex px-3 mt-3 align-self-end"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/simon.png" width="50" alt="" />
+                              <div class="flex-1 align-items-center pt-2">
+                                <h6 class="mb-0">Simon Sandberg</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-5 mb-md-0">
+                        <div class="card card-span h-100 shadow-primary">
+                          <div class="card-body my-3">
+                            <p class="mb-0 px-3 px-md-2 px-xxl-3">An A-Line, or access restriction deed is a property right that has been obtained by CDOT for the sole purpose of prohibiting direct</p>
+                            <div class="align-items-xl-center d-block d-xl-flex px-3 mt-3 align-self-end"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/petter.png" width="50" alt="" />
+                              <div class="flex-1 align-items-center pt-2">
+                                <h6 class="mb-0">Pettersson</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="2000">
+                    <div class="row h-100 mx-1 mb-5 mt-3 gx-md-2 gx-lg-4">
+                      <div class="col-md-4 mb-5 mb-md-0">
+                        <div class="card card-span h-100 shadow-primary">
+                          <div class="card-body my-3">
+                            <p class="mb-0 px-3 px-md-2 px-xxl-3">Yes, you will need to have the land owner sign the permit application as the Permittee, and you sign the permit as the Applicant or Agent for the Permittee.</p>
+                            <div class="align-items-xl-center d-block d-xl-flex px-3 mt-3 align-self-end"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/isak.png" width="50" alt="" />
+                              <div class="flex-1 align-items-center pt-2">
+                                <h6 class="mb-0">Isak Pettersson</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-5 mb-md-0">
+                        <div class="card card-span h-100 shadow-primary">
+                          <div class="card-body my-3">
+                            <p class="mb-0 px-3 px-md-2 px-xxl-3">From most barricade or traffic control companies located in the phone book. They employ certified Traffic Control Supervisors (TCS) who can generate and certify the traffic control plan. </p>
+                            <div class="align-items-xl-center d-block d-xl-flex px-3 mt-3 align-self-end"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/simon.png" width="50" alt="" />
+                              <div class="flex-1 align-items-center pt-2">
+                                <h6 class="mb-0">Simon Sandberg</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-5 mb-md-0">
+                        <div class="card card-span h-100 shadow-primary">
+                          <div class="card-body my-3">
+                            <p class="mb-0 px-3 px-md-2 px-xxl-3">An A-Line, or access restriction deed is a property right that has been obtained by CDOT for the sole purpose of prohibiting direct</p>
+                            <div class="align-items-xl-center d-block d-xl-flex px-3 mt-3 align-self-end"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/petter.png" width="50" alt="" />
+                              <div class="flex-1 align-items-center pt-2">
+                                <h6 class="mb-0">Pettersson</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class="row h-100 mx-1 mb-5 mt-3 gx-md-2 gx-lg-4">
+                      <div class="col-md-4 mb-5 mb-md-0">
+                        <div class="card card-span h-100 shadow-primary">
+                          <div class="card-body my-3">
+                            <p class="mb-0 px-3 px-md-2 px-xxl-3">Yes, you will need to have the land owner sign the permit application as the Permittee, and you sign the permit as the Applicant or Agent for the Permittee.</p>
+                            <div class="align-items-xl-center d-block d-xl-flex px-3 mt-3 align-self-end"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/isak.png" width="50" alt="" />
+                              <div class="flex-1 align-items-center pt-2">
+                                <h6 class="mb-0">Isak Pettersson</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-5 mb-md-0">
+                        <div class="card card-span h-100 shadow-primary">
+                          <div class="card-body my-3">
+                            <p class="mb-0 px-3 px-md-2 px-xxl-3">From most barricade or traffic control companies located in the phone book. They employ certified Traffic Control Supervisors (TCS) who can generate and certify the traffic control plan. </p>
+                            <div class="align-items-xl-center d-block d-xl-flex px-3 mt-3 align-self-end"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/simon.png" width="50" alt="" />
+                              <div class="flex-1 align-items-center pt-2">
+                                <h6 class="mb-0">Simon Sandberg</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-5 mb-md-0">
+                        <div class="card card-span h-100 shadow-primary">
+                          <div class="card-body my-3">
+                            <p class="mb-0 px-3 px-md-2 px-xxl-3">An A-Line, or access restriction deed is a property right that has been obtained by CDOT for the sole purpose of prohibiting direct</p>
+                            <div class="align-items-xl-center d-block d-xl-flex px-3 mt-3 align-self-end"><img class="img-fluid me-3 me-md-2 me-lg-3" src="assets/img/gallery/petter.png" width="50" alt="" />
+                              <div class="flex-1 align-items-center pt-2">
+                                <h6 class="mb-0">Pettersson</h6>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section> -->
+ 
+
+
+      <section id="contact">
+        <div class="bg-holder" style="background-image:url(public/assets/img/gallery/footer-bg.png);background-position:left;background-size:contain;padding:5px 3px;">
+        </div>
+        <!--/.bg-holder-->
+
+        <div class="container">
+          <div class="row min-vh-lg-50 min-vh-xl-75">
+            <div class="col-lg-6 col-xl-5 my-2 py-9 d-none d-lg-block">
+              <div class="card card-span bg-transparent border-start border-primary border-5 mt-3">
+                <div class="card-body">
+                  <p class="text-light fs-2 lh-lg px-lg-3">Get in Touch With Us</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-xl-5 mb-3">
+              <div class="card card-span shadow py-4 px-5">
+                <div class="card-body">
+                  <form class="row g-3 align-items-center">
+                    <div class="mb-3">
+                      <label class="form-label" for="formGroupExampleInput">Name</label>
+                      <input class="form-control form-traffico-control" id="formGroupExampleInput" type="text" placeholder="Name" />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label" for="formGroupExampleInput2">Email address</label>
+                      <input class="form-control form-traffico-control" id="formGroupExampleInput2" type="text" placeholder="Your email address" />
+                    </div>
+                    <div class="mb-3">
+                      <textarea class="form-control form-traffico-control" id="formGroupExampleInput" type="text" placeholder="Your Message" rows="5"  style="resize: none;"></textarea>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-primary" type="submit">GET STARTED
+                        <svg class="bi bi-arrow-right ms-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="py-5">
+
+        <div class="container">
+          <div class="row flex-center">
+            <div class="col-md-6 col-xl-8 order-0">
+              <p class="text-center text-md-start">All rights Reserved &copy; VALIDAR, 2022</p>
+            </div>
+            <div class="col-md-6 col-xl-4 order-1">
+              <p class="text-center text-md-end text-xl-start">Made with&nbsp;
+                <svg class="bi bi-suit-heart-fill" xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#EE4D47" viewBox="0 0 16 16">
+                  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
+                </svg>&nbsp;by&nbsp;<a class="text-1000 fw-bold">SXCA Research Team </a>
+              </p>
+              <!-- <ul class="list-unstyled list-inline mb-6 mb-md-0 text-center text-md-end text-xl-start">
+                <li class="list-inline-item mr-2"><a class="text-decoration-none" href="#!"><img class="list-social-icon" src="assets/img/icons/i.png" alt="..." /></a></li>
+                <li class="list-inline-item mr-2"><a class="text-decoration-none" href="#!"><img class="list-social-icon" src="assets/img/icons/t.png" alt="..." /></a></li>
+                <li class="list-inline-item mr-2"><a class="text-decoration-none" href="#!"><img class="list-social-icon" src="assets/img/icons/f.png" alt="..." /></a></li>
+              </ul> -->
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+
+
+
+    <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+    <script src="public/vendors/@popperjs/popper.min.js"></script>
+    <script src="public/vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="public/vendors/is/is.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="public/vendors/fontawesome/all.min.js"></script>
+    <script src="public/assets/js/theme.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js" integrity="sha512-8E3KZoPoZCD+1dgfqhPbejQBnQfBXe8FuwL4z/c8sTrgeDMFEnoyTlH3obB4/fV+6Sg0a0XF+L/6xS4Xx1fUEg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/debug.addIndicators.js" integrity="sha512-mq6TSOBEH8eoYFBvyDQOQf63xgTeAk7ps+MHGLWZ6Byz0BqQzrP+3GIgYL+KvLaWgpL8XgDVbIRYQeLa3Vqu6A==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/animation.gsap.min.js" integrity="sha512-5/OHwmQzDSBS0Ous4/hlYoWLHd06/d2r7LdKZQVBXOA6PvOqWVXtdboiLTU7lQTGyVoKVTNkwi0ol4gHGlw5ww==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js" integrity="sha512-/8phkpsAzxsbuX18zNkQ2gCq4Q5JsWoPo1jHLDeZorPUHRtx9YJxpdk+os05oDhPJVCNzA2/NMl4rmJyQ+6Fvg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineLite.min.js" integrity="sha512-I0VFyPo7hdM7YrEbQ0pvX4bX2904k0+B19u/xBrPrQoMprfcSnIDfGFD8kP52GbAhwtDjkEVhXlQvj8+vkJyew==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js" integrity="sha512-ht40uOoiTef4nKq0THVzjIGh3VS108J577LVVgNXnQLXza3doXjoM3owin2vd+Hm6w88k12RIrePIVY2WNzz6Q==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/BezierPlugin.min.js" integrity="sha512-oOy5+mtZRcqjn6b9k4oj+tk2/hVIetzOAM9Y5cndEHgLxiIGavAz1agbHf6JjGzxXZ2SMbu08Uy1DDF0UwA0qQ==" crossorigin="anonymous"></script>
+    <script src="public/assets/js/app.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  </body>
+
+</html>
