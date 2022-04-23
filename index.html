@@ -10,13 +10,19 @@
     <link rel="icon" type="image/png" sizes="32x32" href="public/assets/img/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="public/assets/img/favicons/favicon-16x16.png">
     <link rel="shortcut icon" type="image/x-icon" href="public/assets/img/favicons/favicon.ico">
-    <link rel="manifest" href="assets/img/favicons/manifest.json">
+    <!-- <link rel="manifest" href="assets/img/favicons/manifest.json"> -->
     <meta name="msapplication-TileImage" content="public/assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
     <link href="public/assets/css/theme.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <style>
 
+
+      .no-scroll {
+        overflow-y: hidden;
+        overflow-x: hidden;
+      }
       .star {
         position: absolute;
         z-index: 10;
@@ -97,16 +103,132 @@
   font-size: 2rem !important;
 }
 
+.modal-content {
+  max-width: 90vw !important;
 }
 
+.modal-content lottie-player {
+  display: none;
+}
+.fixz {
+        width:100% !important;
+        min-width: 35vw !important;
+        padding: 10px 20px;
+        transform: translate(0%) !important;
+      }
+
+}
+
+@media only screen and (max-width: 900px) {
+  .fixz {
+        width:100% !important;
+        min-width: 35vw !important;
+        padding: 10px 20px;
+        transform: translate(-15%, 0%);
+      }
+}
+
+.modal-wrapper {
+        position: absolute;
+        z-index: 9998;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(175, 175, 175, 0.925);
+        overflow: hidden;
+        display: none;
+        
+      }
+
+      .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        max-width: 70vw;
+        /* height: 45vh; */
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        padding-bottom: 50px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        z-index: 99999;
+      }
+      #modal-title {
+        margin-bottom: 4rem;
+      }
+      .modal-txt {
+        color: #fff;
+        padding: 10px 20px;
+      }
+      .modal-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 14px;
+        color: rgb(255, 255, 255);
+        background-color: rgb(51, 51, 51);
+        font-size: 1.2rem;
+        border: 1px solid rgb(139, 139, 139);
+        border-radius: 10%;
+        cursor: pointer;
+      }
+      .modal-close:hover {
+        background-color: rgb(139, 139, 139);
+        color: rgb(255, 255, 255);
+      }
+      .modal-close a:hover {
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .fixz {
+        width: 100%;
+        min-width: 20vw;
+        border-radius: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+
+      }
+      .fixz:hover {
+        box-shadow: 0 0 0px rgba(0, 0, 0, 0.5);
+      }
+      
     </style>
   </head>
 
 
-  <body>
+  <body class="">
       <!-- <img src="public/assets/img/illustrations/star.png" alt="" class="star" width="100"> -->
   
+      <div class="modal-wrapper" id="modal" onclick="closefun();">
+        <div class="modal-content">
+          <a href=""><div class="modal-close">x</div></a>
+          <h3 id="modal-title"> are you.. ??</h3>
+          <div class="row">
+            <div class="col-md-5">
+              
+              <a class="btn btn-primary order-1 order-lg-0 fixz" href="Manufacturer/html/index.html">
+                <center><lottie-player src="https://assets6.lottiefiles.com/packages/lf20_gacbapzs.json" mode="bounce" background="transparent"  speed="1"  style="width: 200px; height: 200px;"  loop  autoplay></lottie-player></center>
+                <h2 class="modal-txt">Manufacturer</h2>
+              </a>
 
+            </div>
+            <div class="col-md-2">
+              <h4>OR</h4>
+            </div>
+            <div class="col-md-5">
+              
+              <a class="btn btn-primary order-1 order-lg-0 fixz" href="">
+                <center><lottie-player src="https://assets1.lottiefiles.com/packages/lf20_7wjiajj2.json"  background="transparent"  speed="1"  style="width: 200px; height: 200px;"  loop  autoplay></lottie-player></center>
+                <h3 class="modal-txt">Customer</h3>
+              </a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
     <main class="main" id="top">
       <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-4 d-block" data-navbar-on-scroll="data-navbar-on-scroll">
         <div class="container"><a class="navbar-brand" href="index.html"><img src="public/assets/img/gallery/logo.png" height="24" alt="..." /></a>
@@ -120,7 +242,7 @@
               <li class="nav-item px-2" data-anchor="data-anchor"><a class="nav-link" href="#faq">Faq</a></li>
 
             </ul>
-            <form class="ps-lg-5"><a class="btn btn-primary order-1 order-lg-0" href="./public/index.php">Register / Login</a></form>
+            <div class="ps-lg-5"><button onclick="modalfun()" class="btn btn-primary order-1 order-lg-0">Get Started</button></div>
 
           </div>
         </div>
@@ -511,9 +633,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineLite.min.js" integrity="sha512-I0VFyPo7hdM7YrEbQ0pvX4bX2904k0+B19u/xBrPrQoMprfcSnIDfGFD8kP52GbAhwtDjkEVhXlQvj8+vkJyew==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js" integrity="sha512-ht40uOoiTef4nKq0THVzjIGh3VS108J577LVVgNXnQLXza3doXjoM3owin2vd+Hm6w88k12RIrePIVY2WNzz6Q==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/BezierPlugin.min.js" integrity="sha512-oOy5+mtZRcqjn6b9k4oj+tk2/hVIetzOAM9Y5cndEHgLxiIGavAz1agbHf6JjGzxXZ2SMbu08Uy1DDF0UwA0qQ==" crossorigin="anonymous"></script>
-    <script src="public/assets/js/app.js"></script>
-
+    <!-- <script src="public/assets/js/app.js"></script> -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Rubik:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <script>
+      function modalfun() {
+        $('body').addClass('no-scroll');
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        document.getElementById("modal").style.display = "block";
+        
+      }
+
+      function closefun() {
+        $('body').removeClass('no-scroll');
+        document.getElementById("modal").style.display = "none";
+      }
+    </script>
   </body>
 
 </html>
