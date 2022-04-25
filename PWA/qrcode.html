@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
     <script src="assets/jquery.min.js"></script>
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 
 
@@ -27,7 +29,7 @@
         #qr-reader {
             width: 87vw;
             min-height: 100px;
-            height: 150px;
+            height: 180px;
             z-index: 99;
             background: #fff;
             /* height: 200px; */
@@ -72,6 +74,12 @@
         .qr {
             background-color: rgb(0, 255, 64);
         }
+        #preview{
+       width:300px;
+       height:180px;
+       /* margin:auto; */
+    }
+
     </style>
 </head>
 <body style="background-color: #34a9e0;">
@@ -79,8 +87,17 @@
     <header>
         <nav>
             <div class="action-bar">
-                    <center><div id="qr-reader"></div></center>
+                <center><div id="qr-reader"><video id="preview"></video></div></center>
             </div>
+            <br><br>
+        <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+            <label class="btn btn-primary active">
+              <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
+            </label>
+          </div>
         </nav>
         
 
@@ -90,7 +107,7 @@
         <div class="categories section-wrapper">
             <div class="category-items" id="bill">
                 <div class="category-item">
-                    <table>
+                    <table id="myTable">
                         <tr style="min-width: 100vw;">
                             <th width="5vw">sr No</th>
                             <th>Product Name</th>
@@ -170,8 +187,57 @@
             </div>
         </div>
     </div>
+    <!-- my script code for instascan -->
+    <script type="text/javascript">
+        var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+        scanner.addListener('scan',function(content){
+            alert(content);
+            var mytable = document.getElementById('myTable');
+            var row = mytable.insertRow(1);
 
-<script type="text/javascript">
+            var cell1=row.insertCell(0);
+            var cell2=row.insertCell(1);
+            var cell3=row.insertCell(2);
+            // var cell4=row.insertCell(3);
+            cell1.innerHTML= "1";
+            cell2.innerHTML= content;
+            cell3.innerHTML= "200";
+            // cell4.innerHTML= <i class="las la-trash"></i>;
+
+
+
+            //window.location.href=content;
+        });
+        Instascan.Camera.getCameras().then(function (cameras){
+            if(cameras.length>0){
+                scanner.start(cameras[0]);
+                $('[name="options"]').on('change',function(){
+                    if($(this).val()==1){
+                        if(cameras[0]!=""){
+                            scanner.start(cameras[0]);
+                        }else{
+                            alert('No Front camera found!');
+                        }
+                    }else if($(this).val()==2){
+                        if(cameras[1]!=""){
+                            scanner.start(cameras[1]);
+                        }else{
+                            alert('No Back camera found!');
+                        }
+                    }
+                });
+            }else{
+                console.error('No cameras found.');
+                alert('No cameras found.');
+            }
+        }).catch(function(e){
+            console.error(e);
+            alert(e);
+        });
+    </script> 
+   <!-- my code instascan finish -->
+
+<!-- <script type="text/javascript">
 
 var intervalId = window.setInterval(function(){
 
@@ -185,6 +251,71 @@ function onScanSuccess(decodedText, decodedResult) {
 }
 var html5QrcodeScanner = new Html5QrcodeScanner(
 	"qr-reader", { fps: 10, qrbox: 250 });
-html5QrcodeScanner.render(onScanSuccess);    </script>
+html5QrcodeScanner.render(onScanSuccess);    </script> -->
 </body>
 </html>
+
+
+<!-- <style>
+    #preview{
+       width:500px;
+       height:500px;
+       margin:auto;
+    }
+    </style>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>QR scanner</title>
+    </head>
+    <body>
+        <video id="preview"></video>
+        <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+            <label class="btn btn-primary active">
+              <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
+            </label>
+          </div>
+
+    </body>
+    </html>
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
+    scanner.addListener('scan',function(content){
+        alert(content);
+        //window.location.href=content;
+    });
+    Instascan.Camera.getCameras().then(function (cameras){
+        if(cameras.length>0){
+            scanner.start(cameras[0]);
+            $('[name="options"]').on('change',function(){
+                if($(this).val()==1){
+                    if(cameras[0]!=""){
+                        scanner.start(cameras[0]);
+                    }else{
+                        alert('No Front camera found!');
+                    }
+                }else if($(this).val()==2){
+                    if(cameras[1]!=""){
+                        scanner.start(cameras[1]);
+                    }else{
+                        alert('No Back camera found!');
+                    }
+                }
+            });
+        }else{
+            console.error('No cameras found.');
+            alert('No cameras found.');
+        }
+    }).catch(function(e){
+        console.error(e);
+        alert(e);
+    });
+</script> -->
