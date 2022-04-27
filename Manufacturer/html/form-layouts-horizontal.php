@@ -1,3 +1,79 @@
+
+
+<?php
+
+session_start();
+// $con = mysqli_connect('loacalhost','ameroquiz_abhishekT','Abhishek@1234');
+// mysqli_select_db($con,'ameroquiz_Quizdatabase');
+$server = "localhost";
+$user = "root";
+$pass1 = "";
+$db = "validar";
+
+$con = mysqli_connect($server,$user,$pass1,$db);
+
+if($con)
+{
+   echo "hi";
+  
+}
+else{
+    ?>
+    <script>
+        alert("NOT Successful");
+    </script>
+    <?php
+}
+?>
+
+<?php
+
+if(isset($_POST['submit']))
+    {
+    $brand_name = $_POST["brand_name"];
+    $category =  $_POST["category"];
+    $price =  $_POST["price"];
+    $lic_num = $_POST["lic_num"];
+    $mfg_date = $_POST["mfg_date"];
+    $ingredients = $_POST["ingredients"];
+    $main_usage = $_POST["main_usage"];
+    $useurl = $_POST["useurl"];
+    $fssai_code = $_POST["fssai_code"];
+    $customer_care = $_POST["customer_care"];
+    $net_wt = $_POST["net_wt"];
+    $units = $_POST["units"]; 
+    $exp_date = $_POST["exp_date"];
+
+    
+
+    $insertquery = "INSERT INTO `product` ( `brand_name`, `category`, `price`, `lic_num`,`mfg_date`,`ingredients`,`main_usage`,`useurl`,`fssai_code`,`customer_care`,`net_wt`,`units`,`exp_date`) VALUES
+    ('$brand_name', '$category', '$price', '$lic_num','$mfg_date','$ingredients','$main_usage','$useurl','$fssai_code','$customer_care','$net_wt','$units','$exp_date')";
+    $query = mysqli_query($con,$insertquery);
+
+    
+
+    if($query)
+    {
+      ?>
+
+    <script>
+      alert("Your Message has been Sent Successfully");
+    </script>
+        
+<?php
+    }
+    else{
+     ?>
+
+<script>
+      alert("Message Not sent");
+    </script>
+        <?php
+    }
+
+  }
+?>
+
 <!DOCTYPE html>
 
 <!-- beautify ignore:start -->
@@ -572,22 +648,69 @@
                 <div class="col-xxl">
                   <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                      <h5 class="mb-0">Basic Layout</h5>
+                      <h5 class="mb-0">Enter Details for your product</h5>
                       <small class="text-muted float-end">Default label</small>
                     </div>
                     <div class="card-body">
-                      <form>
+                      <form action="form-layouts-horizontal.php" method="post">
+                        
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-company">Company</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="basic-default-name" placeholder="John Doe" />
+                            <div class="input-group input-group-merge">
+                              <span id="basic-icon-default-company2" class="input-group-text"
+                                ><i class="bx bx-buildings"></i
+                              ></span>
+                              <input
+                                type="text"
+                                name="brand_name"
+                                id="basic-icon-default-company"
+                                class="form-control"
+                                placeholder="Abcd pvt ltd."
+                                aria-label="ACME Inc."
+                                aria-describedby="basic-icon-default-company2"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-company">Company</label>
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Product Name</label>
                           <div class="col-sm-10">
                             <input
                               type="text"
+                              name="product_name"
+                              class="form-control"
+                              id="basic-default-company"
+                              placeholder="Amul Buttemilk."
+                            />
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Category</label>
+                          <div class="col-sm-10">
+                            <select class="form-select" name="category" id="exampleFormControlSelect1" aria-label="Default select example">
+                              <option selected>Open this select Category</option>
+                              <option value="1">Food</option>
+                              <option value="2">Clothing</option>
+                              <option value="3">Accesories</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Do You Have Fssai code?</label>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox"  id="defaultCheck3 fssai_check_id" value="" name="fssai_check" onclick="checkfssai()"/>
+                              <label class="form-check-label" for="defaultCheck3"> No we Don't have  </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-3" id="fssai_id">
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Fssai Code</label>
+                          <div class="col-sm-10">
+                            <input
+                              type="text"
+                              name="fssai_code"
                               class="form-control"
                               id="basic-default-company"
                               placeholder="ACME Inc."
@@ -595,50 +718,200 @@
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-email">Email</label>
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Net Weight</label>
                           <div class="col-sm-10">
-                            <div class="input-group input-group-merge">
+                            <input
+                              type="text"
+                              name="net_wt"
+                              class="form-control"
+                              id="basic-default-company"
+                              placeholder="Amul Buttemilk."
+                            />
+                          </div>
+                        </div>
+                        <div class="row mb-3 d-flex">
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Price Per Unit</label>
+                          <div class="col-sm-4">
+                            <div class="input-group">
+                              <span class="input-group-text">$</span>
                               <input
                                 type="text"
-                                id="basic-default-email"
+                                name="price"
+                                class="form-control"
+                                placeholder="Amount"
+                                aria-label="Amount (to the nearest dollar)"
+                              />
+                              <span class="input-group-text">.00</span>
+                            </div>
+                          </div>
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">GST Per Unit</label>
+                          <div class="col-sm-4">
+                            <div class="input-group">
+                              <span class="input-group-text">$</span>
+                              <input
+                                type="text"
+                                name="gst"
+                                class="form-control"
+                                placeholder="Amount"
+                                aria-label="Amount (to the nearest dollar)"
+                              />
+                              <span class="input-group-text">.00</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Do You Have License?</label>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input lic_check_id" type="checkbox" value="0" id="defaultCheck3" name="lic_check" onclick="al2()" />
+                              <label class="form-check-label" for="defaultCheck3"> No we Don't have  </label>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        
+                        <div class="row mb-3" id="lic_id">
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Licence Number</label>
+                          <div class="col-sm-10">
+                            <input
+                              type="text"
+                              name="lic_num"
+                              class="form-control"
+                              id="basic-default-company"
+                              placeholder="188282838"
+                            />
+                          </div>
+                        </div>
+                        
+                       
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-icon-default-email">Email</label>
+                          <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                              <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                              <input
+                                type="email"
+                                id="basic-icon-default-email"
                                 class="form-control"
                                 placeholder="john.doe"
                                 aria-label="john.doe"
-                                aria-describedby="basic-default-email2"
+                                aria-describedby="basic-icon-default-email2" 
                               />
-                              <span class="input-group-text" id="basic-default-email2">@example.com</span>
+                              <!-- <span id="basic-icon-default-email2" class="input-group-text">@example.com</span> -->
                             </div>
                             <div class="form-text">You can use letters, numbers & periods</div>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-phone">Phone No</label>
+                          <label class="col-sm-2 form-label" for="basic-icon-default-phone">Customer Care Number</label>
                           <div class="col-sm-10">
-                            <input
-                              type="text"
-                              id="basic-default-phone"
-                              class="form-control phone-mask"
-                              placeholder="658 799 8941"
-                              aria-label="658 799 8941"
-                              aria-describedby="basic-default-phone"
-                            />
+                            <div class="input-group input-group-merge">
+                              <span id="basic-icon-default-phone2" class="input-group-text"
+                                ><i class="bx bx-phone"></i
+                              ></span>
+                              <input
+                                type="text"
+                                name="customer_care"
+                                id="basic-icon-default-phone"
+                                class="form-control phone-mask"
+                                placeholder="658 799 8941"
+                                aria-label="658 799 8941"
+                                aria-describedby="basic-icon-default-phone2"
+                              />
+                            </div>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-message">Message</label>
+                          <label class="col-sm-2 col-form-label" for="basic-default-message">Ingredients</label>
                           <div class="col-sm-10">
                             <textarea
                               id="basic-default-message"
+                              name="ingredients"
                               class="form-control"
-                              placeholder="Hi, Do you have a moment to talk Joe?"
+                              placeholder="milk(40%) , water (7.5%)"
                               aria-label="Hi, Do you have a moment to talk Joe?"
                               aria-describedby="basic-icon-default-message2"
                             ></textarea>
                           </div>
                         </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-default-message">What is the main usage</label>
+                          <div class="col-sm-10">
+                            <textarea
+                              id="basic-default-message"
+                              name="main_usage"
+                              class="form-control"
+                              placeholder="Used for drinking and used as a Ingredient in a recipe"
+                              aria-label="Hi, Do you have a moment to talk Joe?"
+                              aria-describedby="basic-icon-default-message2"
+                            ></textarea>
+                          </div>
+                        </div>
+                        <!-- <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-default-message">How to use? (Mention steps)</label>
+                          <div class="col-sm-10">
+                            <textarea
+                              id="basic-default-message"
+                              class="form-control"
+                              placeholder="step 1: cut the sachet"
+                              aria-label="Hi, Do you have a moment to talk Joe?"
+                              aria-describedby="basic-icon-default-message2"
+                            ></textarea>
+                          </div>
+                        </div> -->
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-default-message">How to use? (URL)</label>
+                          <div class="col-sm-10">
+                            <input type="url" name="useurl"
+                              id="basic-default-message"
+                              class="form-control"
+                              placeholder="provide URL: https://example.youtube.com"
+                              aria-label="Hi, Do you have a moment to talk Joe?"
+                              aria-describedby="basic-icon-default-message2"
+                            />
+                            
+                          </div>
+                        </div>
+                        <div class="mb-3 row">
+                          <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Manufacturing DateTime</label>
+                          <div class="col-md-10">
+                            <input
+                              class="form-control"
+                              name="mfg_date"
+                              type="datetime-local"
+                              value="2021-06-18T12:30:00"
+                              id="html5-datetime-local-input"
+                            />
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Expiry Date</label>
+                          <div class="col-sm-10">
+                            <input
+                              type="text"
+                              name="units"
+                              class="form-control"
+                              id="basic-default-company"
+                              placeholder="Best Before 9 months from the date of Manufacturing  "
+                            />
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Units Produced</label>
+                          <div class="col-sm-10">
+                            <input
+                              type="numbers"
+                              name="exp_date"
+                              class="form-control"
+                              id="basic-default-company"
+                              placeholder="12000"
+                            />
+                          </div>
+                        </div>
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary">Send</button>
+                            <button type="submit" class="btn btn-primary" name="submit">Send</button>
                           </div>
                         </div>
                       </form>
@@ -745,7 +1018,7 @@
                         </div>
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary">Send</button>
+                            <button type="submit" class="btn btn-primary" name="submit2">Send</button>
                           </div>
                         </div>
                       </form>
@@ -805,5 +1078,10 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+      
+
+      
+    </script>
   </body>
 </html>
