@@ -296,19 +296,19 @@ if(isset($_POST['submit']))
                           <label class="col-sm-2 col-form-label" for="basic-default-company">Do You Have Fssai code?</label>
                           <div class="col-sm-10">
                             <div class="form-check">
-                              <input class="form-check-input" type="checkbox"  id="defaultCheck3 fssai_check_id" value="" name="fssai_check" onclick="checkfssai()"/>
+                              <input class="form-check-input" type="checkbox"  id="defaultCheck300" value="" name="fssai_check"/>
                               <label class="form-check-label" for="defaultCheck3"> No we Don't have  </label>
                             </div>
                           </div>
                         </div>
-                        <div class="row mb-3" id="fssai_id">
+                        <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-default-company">Fssai Code</label>
                           <div class="col-sm-10">
                             <input
                               type="text"
                               name="fssai_code"
                               class="form-control"
-                              id="basic-default-company"
+                              id="fssai_code"
                               placeholder="ACME Inc."
                             />
                           </div>
@@ -360,21 +360,21 @@ if(isset($_POST['submit']))
                           <label class="col-sm-2 col-form-label" for="basic-default-company">Do You Have License?</label>
                           <div class="col-sm-10">
                             <div class="form-check">
-                              <input class="form-check-input lic_check_id" type="checkbox" value="0" id="defaultCheck3" name="lic_check" onclick="al2()" />
+                              <input class="form-check-input lic_check_id" type="checkbox" value="0" id="defaultCheck200" name="lic_check"  />
                               <label class="form-check-label" for="defaultCheck3"> No we Don't have  </label>
                             </div>
                           </div>
                         </div>
                         
                         
-                        <div class="row mb-3" id="lic_id">
+                        <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-default-company">Licence Number</label>
                           <div class="col-sm-10">
                             <input
                               type="text"
                               name="lic_num"
                               class="form-control"
-                              id="basic-default-company"
+                              id="lic_id"
                               placeholder="188282838"
                             />
                           </div>
@@ -575,6 +575,15 @@ $("#inputGroupFile02").change(function(){
     readURL(this);
 });
 
+$("#defaultCheck300").change(function() {
+  var elem = document.getElementById("fssai_code");
+  elem.toggleAttribute("disabled");
+});
+
+$("#defaultCheck200").change(function() {
+  var elem = document.getElementById("lic_id");
+  elem.toggleAttribute("disabled");
+});
       
     </script>
   </body>
