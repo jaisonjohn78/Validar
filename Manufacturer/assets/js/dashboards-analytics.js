@@ -18,12 +18,12 @@
     totalRevenueChartOptions = {
       series: [
         {
-          name: '2021',
-          data: [18, 7, 15, 29, 18, 12, 9]
+          name: '2022',
+          data: [cgIndex1[0],cgIndex1[1],cgIndex1[2],cgIndex1[3],cgIndex1[4],cgIndex1[5],cgIndex1[6]]
         },
         {
-          name: '2020',
-          data: [-13, -18, -9, -14, -5, -17, -15]
+          name: '2021',
+          data: [cgIndex2[0],cgIndex2[1],cgIndex2[2],cgIndex2[3],cgIndex2[4],cgIndex2[5],cgIndex2[6]]
         }
       ],
       chart: {
@@ -278,7 +278,7 @@
   // --------------------------------------------------------------------
   const growthChartEl = document.querySelector('#growthChart'),
     growthChartOptions = {
-      series: [78],
+      series: [sIndex],
       labels: ['Growth'],
       chart: {
         height: 240,
@@ -394,7 +394,7 @@
       },
       series: [
         {
-          data: [110, 270, 145, 245, 205, 285]
+          data: [prIndex[0],prIndex[1],prIndex[2],prIndex[3],prIndex[4],prIndex[5]]
         }
       ],
       xaxis: {
@@ -427,9 +427,9 @@
         width: 130,
         type: 'donut'
       },
-      labels: ['Electronic', 'Sports', 'Decor', 'Fashion'],
-      series: [85, 15, 50, 50],
-      colors: [config.colors.primary, config.colors.secondary, config.colors.info, config.colors.success],
+      labels: ['Food-Beverages', 'Healthcare', 'Dairy-Products', 'Beauty-hygiene'],
+      series: [mcIndex[0], mcIndex[1], mcIndex[2], mcIndex[3]],
+      colors: [config.colors.primary, config.colors.success, config.colors.info, config.colors.warning],
       stroke: {
         width: 5,
         colors: cardColor
@@ -473,7 +473,7 @@
                 show: true,
                 fontSize: '0.8125rem',
                 color: axisColor,
-                label: 'Weekly',
+                label: 'Market',
                 formatter: function (w) {
                   return '38%';
                 }
@@ -494,7 +494,7 @@
     incomeChartConfig = {
       series: [
         {
-          data: [24, 21, 30, 22, 42, 26, 35, 29]
+          data: [dataIndex[0],dataIndex[1],dataIndex[2],dataIndex[3],dataIndex[4],dataIndex[5],dataIndex[6],dataIndex[7]],
         }
       ],
       chart: {
@@ -558,7 +558,7 @@
         }
       },
       xaxis: {
-        categories: ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: [cIndex[0], cIndex[1], cIndex[2], cIndex[3], cIndex[4], cIndex[5], cIndex[6], cIndex[7]],
         axisBorder: {
           show: false
         },
@@ -591,10 +591,10 @@
   // --------------------------------------------------------------------
   const weeklyExpensesEl = document.querySelector('#expensesOfWeek'),
     weeklyExpensesConfig = {
-      series: [65],
+      series: [dIndex],
       chart: {
-        width: 60,
-        height: 60,
+        width: 90,
+        height: 90,
         type: 'radialBar'
       },
       plotOptions: {
@@ -604,7 +604,7 @@
           strokeWidth: '8',
           hollow: {
             margin: 2,
-            size: '45%'
+            size: '50%'
           },
           track: {
             strokeWidth: '50%',
@@ -617,11 +617,11 @@
             },
             value: {
               formatter: function (val) {
-                return '$' + parseInt(val);
+                return parseInt(val) ;
               },
               offsetY: 5,
               color: '#697a8d',
-              fontSize: '13px',
+              fontSize: '20px',
               show: true
             }
           }
