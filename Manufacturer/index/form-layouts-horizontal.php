@@ -4,6 +4,7 @@ include('function.php');
 
 if(isset($_POST['submit']))
     {
+    $qr_code = $_POST['qr_code'].str_shuffle("agfbd");
     $company_name = $_POST['company_name'];
     $brand_name = $_POST["brand_name"];
     $company_email = $_POST["company_email"];
@@ -27,8 +28,8 @@ if(isset($_POST['submit']))
     if (move_uploaded_file($product_img_tmp, $folder))  {
       $msg = "Image uploaded successfully";
       
-    $query = "INSERT INTO `product` ( `company_name`,`brand_name`, `company_email`, `product_img`, `product_name`, `category`, `price`, `lic_num`,`mfg_date`,`ingredients`,`main_usage`,`useurl`,`fssai_code`,`customer_care`,`net_wt`,`exp_date`,`units`) VALUES
-    ('$company_name', '$brand_name','$company_email', '$product_img', '$product_name', '$category', '$price', '$lic_num','$mfg_date','$ingredients','$main_usage','$useurl','$fssai_code','$customer_care','$net_wt','$exp_date','$units')";
+    $query = "INSERT INTO `product` ( `qr_code`, `company_name`,`brand_name`, `company_email`, `product_img`, `product_name`, `category`, `price`, `lic_num`,`mfg_date`,`ingredients`,`main_usage`,`useurl`,`fssai_code`,`customer_care`,`net_wt`,`exp_date`,`units`) VALUES
+    ('$qr_code','$company_name', '$brand_name','$company_email', '$product_img', '$product_name', '$category', '$price', '$lic_num','$mfg_date','$ingredients','$main_usage','$useurl','$fssai_code','$customer_care','$net_wt','$exp_date','$units')";
     $query = mysqli_query($con,$query);
     if($query)
     {
@@ -114,7 +115,7 @@ if(isset($_POST['submit']))
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a href="index.php" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <img src="../assets/img/favicon/android-chrome-192x192.png" width="70" alt="App Logo" />
               </span>
@@ -131,7 +132,7 @@ if(isset($_POST['submit']))
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item ">
-              <a href="index.html" class="menu-link">
+              <a href="index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
@@ -149,14 +150,14 @@ if(isset($_POST['submit']))
             </li>
 
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
+              <a href="cards-basic.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">My Product List</div>
               </a>
             </li>
 
             <li class="menu-item">
-              <a href="pages-account-settings-account.html" class="menu-link">
+              <a href="pages-account-settings-account.php" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-dock-top"></i>
                   <div data-i18n="Account">Account</div>
                 </a>
@@ -173,6 +174,15 @@ if(isset($_POST['submit']))
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">Support</div>
               </a>
+            </li>
+
+            <li class="menu-item fixed-bottom mb-4">
+            <div class="align-middle d-flex justify-content-center align-self-center ">
+              <a href="logout.php" class="menu-link btn-warning align-items-center">
+              <h5 class="mt-1 mb-1"><i class="menu-icon tf-icons bx bx-log-out"></i>
+                Logout</h5>
+              </a>
+              </div>
             </li>
             
           </ul>
@@ -491,6 +501,18 @@ if(isset($_POST['submit']))
                               class="form-control"
                               id="basic-default-company"
                               placeholder="100"
+                            />
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Bar Code</label>
+                          <div class="col-sm-10">
+                            <input
+                              type="text"
+                              name="qr_code"
+                              class="form-control"
+                              id="basic-default-company"
+                              placeholder="Bar Code of your Existing Product"
                             />
                           </div>
                         </div>

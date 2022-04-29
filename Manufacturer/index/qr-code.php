@@ -1,3 +1,57 @@
+<?php
+include('config.php');
+include('function.php');
+
+if(isset($_POST['submit']))
+    {
+    $company_name = $_POST['company_name'];
+    $brand_name = $_POST["brand_name"];
+    $company_email = $_POST["company_email"];
+    $product_img = $_FILES["uploadfile"]["name"];
+    $product_img_tmp = $_FILES["uploadfile"]["tmp_name"];
+    $folder = "product/".$product_img;
+    $product_name = $_POST["product_name"];
+    $category =  $_POST["category"];
+    $price =  $_POST["price"];
+    $lic_num = $_POST["lic_num"];
+    $mfg_date = $_POST["mfg_date"];
+    $ingredients = $_POST["ingredients"];
+    $main_usage = $_POST["main_usage"];
+    $useurl = $_POST["useurl"];
+    $fssai_code = $_POST["fssai_code"];
+    $customer_care = $_POST["customer_care"];
+    $net_wt = $_POST["net_wt"];
+    $exp_date = $_POST["exp_date"];
+    $units = $_POST["units"]; 
+
+    if (move_uploaded_file($product_img_tmp, $folder))  {
+      $msg = "Image uploaded successfully";
+      
+    $query = "INSERT INTO `product` ( `company_name`,`brand_name`, `company_email`, `product_img`, `product_name`, `category`, `price`, `lic_num`,`mfg_date`,`ingredients`,`main_usage`,`useurl`,`fssai_code`,`customer_care`,`net_wt`,`exp_date`,`units`) VALUES
+    ('$company_name', '$brand_name','$company_email', '$product_img', '$product_name', '$category', '$price', '$lic_num','$mfg_date','$ingredients','$main_usage','$useurl','$fssai_code','$customer_care','$net_wt','$exp_date','$units')";
+    $query = mysqli_query($con,$query);
+    if($query)
+    {
+      ?>
+    <script>
+      alert("Your Product has Successfully been added !!");
+    </script>    
+<?php
+    }
+    else{
+?>
+<script>
+      alert("Oops!, Seems something went wrong... Please try again later");
+    </script>
+        <?php
+    }
+  }
+    }else{
+      $msg = "Failed to upload image";
+    }
+
+?>
+
 <!DOCTYPE html>
 
 <!-- beautify ignore:start -->
@@ -16,7 +70,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>My Products</title>
+    <title>Validar QR Code Generator</title>
 
     <meta name="description" content="" />
 
@@ -60,7 +114,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a href="index.php" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <img src="../assets/img/favicon/android-chrome-192x192.png" width="70" alt="App Logo" />
               </span>
@@ -77,7 +131,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item ">
-              <a href="index.html" class="menu-link">
+              <a href="index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
@@ -86,7 +140,7 @@
             
         
             <li class="menu-item">
-                <li class="menu-item ">
+                <li class="menu-item active">
                   <a href="form-layouts-horizontal.php" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-detail"></i>
                     <div data-i18n="Horizontal Form">QR Generation</div>
@@ -94,15 +148,15 @@
                 </li> 
             </li>
 
-            <li class="menu-item active">
-              <a href="cards-basic.html" class="menu-link">
+            <li class="menu-item">
+              <a href="cards-basic.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">My Product List</div>
               </a>
             </li>
 
             <li class="menu-item">
-              <a href="pages-account-settings-account.html" class="menu-link">
+              <a href="pages-account-settings-account.php" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-dock-top"></i>
                   <div data-i18n="Account">Account</div>
                 </a>
@@ -120,6 +174,15 @@
                 <div data-i18n="Support">Support</div>
               </a>
             </li>
+
+            <li class="menu-item fixed-bottom mb-4">
+            <div class="align-middle d-flex justify-content-center align-self-center ">
+              <a href="logout.php" class="menu-link btn-warning align-items-center">
+              <h5 class="mt-1 mb-1"><i class="menu-icon tf-icons bx bx-log-out"></i>
+                Logout</h5>
+              </a>
+              </div>
+            </li>
             
           </ul>
         </aside>
@@ -129,95 +192,71 @@
         <div class="layout-page">
 
 
+
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">My Products /</span> Product list</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms/</span> QR Generator</h4>
+
+              <!-- Basic Layout & Basic with Icons -->
+              <div class="row">
+
+              <div class="col-12">
+                  <div class="card">
+                      <div class="card-body">
+                      <div class="table-responsive text-center">
+                      <table class="table user-table text-center ">
+                        <thead>
+                          <tr>
+                            <th class="border-top-0">
+                              #
+                            </th>
+                            <th class="border-top-0">
+                              Product Name
+                            </th>
+                            <th class="border-top-0">
+                              QR
+                            </th>
+                            <th class="border-top-0">
+                              MRP
+                            </th>
+                            <th class="border-top-0">
+                              Mgf Date
+                            </th>
+                            <th class="border-top-0">
+                              Total Scanned
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+
+
+                        
+                          <tr>
+                            <td></td>
+                            <td>
+                              <h4>Hellp</h4>
+                                <a href="qr_report.php">Report</a>
+                            </td>
+                            <td><img src="https://chart.apis.google.com/chart?cht=qr&chs=200x200&chco=1ab2ff&chl=<?php echo $qr_filter_paths ?>?id=<?php echo $id = 2 ?>" ><br><b><a href="">Download</a></b></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
 
 
 
-              <!-- Grid Card -->
-              <h6 class="pb-1 mb-4 text-muted">All Products</h6>
-              <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
-                <div class="col">
-                  <div class="card h-100">
-                    <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap" />
-                    <div class="card-body">
-                      <h5 class="card-title">Card first title</h5>
-                      <p class="card-text">
-                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                        This content is a little bit longer.
-                      </p>
-                    </div>
+                        </tbody>
+                      </table>
+                    </div>  
+                      </div>
                   </div>
-                </div>
-                          <div class="col">
-                            <div class="card h-100">
-                              <img class="card-img-top" src="../assets/img/elements/13.jpg" alt="Card image cap" />
-                              <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                  This is a longer card with supporting text below as a natural lead-in to additional content.
-                                  This content is a little bit longer.
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                <div class="col">
-                  <div class="card h-100">
-                    <img class="card-img-top" src="../assets/img/elements/4.jpg" alt="Card image cap" />
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">
-                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="card h-100">
-                    <img class="card-img-top" src="../assets/img/elements/18.jpg" alt="Card image cap" />
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">
-                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                        This content is a little bit longer.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <!-- <div class="col">
-                  <div class="card h-100">
-                    <img class="card-img-top" src="../assets/img/elements/19.jpg" alt="Card image cap" />
-                    <div class="card-body">
-                      <h5 class="card-title">Cardinggg title</h5>
-                      <p class="card-text">
-                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                        This content is a little bit longer.
-                      </p>
-                    </div>
-                  </div>
-                </div> -->
-                <div class="col">
-                  <div class="card h-100">
-                    <img class="card-img-top" src="../assets/img/elements/20.jpg" alt="Card image cap" />
-                    <div class="card-body">
-                      <h5 class="card-title">Card last title</h5>
-                      <p class="card-text">
-                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                        This content is a little bit longer.
-                      </p>
-                    </div>
-                  </div>
-                </div>
               </div>
-
-              <!-- Masonry -->
-              <!-- <h6 class="pb-1 mb-4 text-muted">Masonry</h6> -->
-             
-              <!--/ Card layout -->
+               
+                
+              </div>
             </div>
             <!-- / Content -->
 
@@ -230,7 +269,7 @@
                     document.write(new Date().getFullYear());
                   </script>
                   , made with ❤️ by
-                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">SXCA Research team</a>
+                  <a class="footer-link fw-bolder">SXCA Research Team</a>
                 </div>
               
               </div>
@@ -249,7 +288,7 @@
     </div>
     <!-- / Layout wrapper -->
 
-  
+   
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -262,7 +301,6 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="../assets/vendor/libs/masonry/masonry.js"></script>
 
     <!-- Main JS -->
     <script src="../assets/js/main.js"></script>
@@ -271,5 +309,33 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+      function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#inputGroupFile02").change(function(){
+    readURL(this);
+});
+
+$("#defaultCheck300").change(function() {
+  var elem = document.getElementById("fssai_code");
+  elem.toggleAttribute("disabled");
+});
+
+$("#defaultCheck200").change(function() {
+  var elem = document.getElementById("lic_id");
+  elem.toggleAttribute("disabled");
+});
+      
+    </script>
   </body>
 </html>

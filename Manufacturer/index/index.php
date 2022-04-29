@@ -57,7 +57,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a href="index.php" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <img src="../assets/img/favicon/android-chrome-192x192.png" width="70" alt="App Logo" />
               </span>
@@ -74,7 +74,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item active">
-              <a href="index.html" class="menu-link">
+              <a href="index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
@@ -92,14 +92,14 @@
             </li>
 
             <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
+              <a href="cards-basic.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">My Product List</div>
               </a>
             </li>
 
             <li class="menu-item">
-              <a href="pages-account-settings-account.html" class="menu-link">
+              <a href="pages-account-settings-account.php" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-dock-top"></i>
                   <div data-i18n="Account">Account</div>
                 </a>
@@ -116,6 +116,15 @@
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">Support</div>
               </a>
+            </li>
+
+            <li class="menu-item fixed-bottom mb-4">
+            <div class="align-middle d-flex justify-content-center align-self-center ">
+              <a href="logout.php" class="menu-link btn-warning align-items-center">
+              <h5 class="mt-1 mb-1"><i class="menu-icon tf-icons bx bx-log-out"></i>
+                Logout</h5>
+              </a>
+              </div>
             </li>
             
           </ul>
@@ -214,7 +223,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
+                      <a class="dropdown-item" href="auth-login-basic.php">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>
