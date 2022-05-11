@@ -1,12 +1,11 @@
 <?php
 
 include 'config.php';
-
-session_start();
+include 'function.php';
 
 error_reporting(0);
 
-if (isset($_SESSION["user_id"])) {
+if (isset($_SESSION["id"])) {
   header("Location: welcome.php");
 }
 
@@ -42,7 +41,7 @@ if (isset($_POST["signin"])) {
   if (mysqli_num_rows($check_email) > 0) {
     $row = mysqli_fetch_assoc($check_email);
     $_SESSION["user_id"] = $row['id'];
-    header("Location: welcome.php");
+    // header("Location: welcome.php");
   } else {
     echo "<script>alert('Login details is incorrect. Please try again.');</script>";
   }
