@@ -21,7 +21,7 @@
         }
         main {
             position: sticky;
-            transform: translate(0%, 30%);
+            transform: translate(0%, 50%);
             background-color: #ffffff00;
             padding-top: 0px !important;
 
@@ -211,7 +211,7 @@
         Instascan.Camera.getCameras().then(function (cameras){
             if(cameras.length>0){
                 scanner.start(cameras[0]);
-                $('[name="options"]').on('change',function(){
+                $('#qr-reader').on('change',function(){
                     if($(this).val()==1){
                         if(cameras[0]!=""){
                             scanner.start(cameras[0]);
@@ -237,7 +237,7 @@
     </script> 
    <!-- my code instascan finish -->
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 
 var intervalId = window.setInterval(function(){
 
@@ -250,15 +250,11 @@ function onScanSuccess(decodedText, decodedResult) {
     console.log(`Code scanned = ${decodedText}`, decodedResult);
 }
 var html5QrcodeScanner = new Html5QrcodeScanner(
-	"qr-reader", { fps: 10, qrbox: 250 });
+	"qr-reader", { fps: 60, qrbox: 250 });
 
-html5QrcodeScanner.render(onScanSuccess);    </script> -->
+html5QrcodeScanner.render(onScanSuccess); 
 
-html5QrcodeScanner.render(onScanSuccess);    
 </script>
-
-
-html5QrcodeScanner.render(onScanSuccess);    </script> -->
 
 </body>
 </html>
