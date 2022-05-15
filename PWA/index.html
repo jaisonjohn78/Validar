@@ -152,10 +152,13 @@
     </div>
 
     <script>
+
         $(document).ready(function(){
+            if (screen.width >= 700) {
+         document.location = "mobile_ui.html";
+        }
             $(".splash").delay(5000).fadeOut(1000);
             // $("body").removeClass("body-pink");
-
 
         });
     </script>

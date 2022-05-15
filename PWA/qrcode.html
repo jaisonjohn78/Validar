@@ -6,30 +6,28 @@
     <title>Mobile UI</title>
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
     <script src="assets/jquery.min.js"></script>
-    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.2.1/html5-qrcode.min.js" integrity="sha512-cuVnjPNH3GyigomLiyATgpCoCmR9T3kwjf94p0BnSfdtHClzr1kyaMHhUmadydjxzi1pwlXjM5sEWy4Cd4WScA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
 
     
     
     <style>
-        header {
-            position: fixed;
+        .header {
+        z-index: 999;
         }
         main {
             position: sticky;
-            transform: translate(0%, 50%);
-            background-color: #ffffff00;
+            transform: translate(0%, 10%);
+            background: #ffffff00;
             padding-top: 0px !important;
 
         }
         #qr-reader {
-            width: 87vw;
-            min-height: 100px;
-            height: 180px;
+           
             z-index: 99;
             background: #fff;
             /* height: 200px; */
@@ -41,10 +39,7 @@
             height: 100vh;
             
         }
-        video {
-            width: 95vw;
-            height: 100px;
-        }
+
         table, .category-item {
             
             width: 90vw;
@@ -74,34 +69,17 @@
         .qr {
             background-color: rgb(0, 255, 64);
         }
-        #preview{
-       width:300px;
-       height:180px;
-       /* margin:auto; */
-    }
+
 
     </style>
 </head>
 <body style="background-color: #34a9e0;">
    
-    <header>
-        <nav>
-            <div class="action-bar">
-                <center><div id="qr-reader"><video id="preview"></video></div></center>
-            </div>
-            <br><br>
-        <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
-            <label class="btn btn-primary active">
-              <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
-            </label>
-            <label class="btn btn-secondary">
-              <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
-            </label>
-          </div>
-        </nav>
-        
+ 
+        <div class="header">
+            <div id="reader" width="80vw"></div>
+        </div>
 
-    </header>
     
     <main>
         <div class="categories section-wrapper">
@@ -109,44 +87,24 @@
                 <div class="category-item">
                     <table id="myTable">
                         <tr style="min-width: 100vw;">
-                            <th width="5vw">sr No</th>
+                            <th hidden>qrCode</th>
+                            <th width="5vw" style="padding-left: 5px;">sr No</th>
                             <th>Product Name</th>
                             <th width="5vw">MRP</th>
                             <th>action</th>
 
                           </tr>
                           <tr>
+                            <td hidden><input type="text" name="qr_code" value=""></td>
                             <td>1</td>
                             <td id="product">Maria Anders</td>
                             <td>100</td>
                             <td><i class="las la-trash"></i></td>
 
                           </tr>
-                          <tr>
-                            <td>2</td>
-                            <td id="product">Francisco Chang</td>
-                            <td>280</td>
-                            <td><i class="las la-trash"></i></td>
-                          </tr>
-                          <tr>
-                            <td>3</td>
-                            <td id="product">Roland Mendelasdasdasdasdadasdadsa</td>
-                            <td>50</td>
-                            <td><i class="las la-trash"></i></td>
-                          </tr>
-                          <tr>
-                            <td>4</td>
-                            <td id="product">Helen Bennett</td>
-                            <td>55</td>
-                            <td><i class="las la-trash"></i></td>
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td id="product">Yoshi Tannamuri</td>
-                            <td>99</td>
-                            <td><i class="las la-trash"></i></td>
-                          </tr>
+                          
                           <tr class="qr">
+                            <td hidden><input type="text" name="qr_code" value=""></td>
                             <td>6</td>
                             <td id="product">Giovanni Rovelli</td>
                             <td>55</td>
@@ -187,55 +145,32 @@
             </div>
         </div>
     </div>
-    <!-- my script code for instascan -->
     <script type="text/javascript">
-        var scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: false });
-        scanner.addListener('scan',function(content){
-            alert(content);
-            var mytable = document.getElementById('myTable');
-            var row = mytable.insertRow(1);
+        $("input[type='text']:last-child").focus();
+        const html5QrCode = new Html5Qrcode("reader");
+        // on success funtion call 
+        const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+            var sound = new Audio("assets/scanned.mp3"); 
+            sound.play();
+            alert(decodedText);       
 
-            var cell1=row.insertCell(0);
-            var cell2=row.insertCell(1);
-            var cell3=row.insertCell(2);
-            // var cell4=row.insertCell(3);
-            cell1.innerHTML= "1";
-            cell2.innerHTML= content;
-            cell3.innerHTML= "200";
-            // cell4.innerHTML= <i class="las la-trash"></i>;
+        };
+        const config = { fps: 15, qrbox: { width: 250, height: 150 } };
 
+        // If you want to prefer front camera
+        html5QrCode.start({ facingMode: "user" }, config, qrCodeSuccessCallback);
 
+        // If you want to prefer back camera
+        html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
 
-            //window.location.href=content;
-        });
-        Instascan.Camera.getCameras().then(function (cameras){
-            if(cameras.length>0){
-                scanner.start(cameras[0]);
-                $('#qr-reader').on('change',function(){
-                    if($(this).val()==1){
-                        if(cameras[0]!=""){
-                            scanner.start(cameras[0]);
-                        }else{
-                            alert('No Front camera found!');
-                        }
-                    }else if($(this).val()==2){
-                        if(cameras[1]!=""){
-                            scanner.start(cameras[1]);
-                        }else{
-                            alert('No Back camera found!');
-                        }
-                    }
-                });
-            }else{
-                console.error('No cameras found.');
-                alert('No cameras found.');
-            }
-        }).catch(function(e){
-            console.error(e);
-            alert(e);
-        });
+        // Select front camera or fail with `OverconstrainedError`.
+        html5QrCode.start({ facingMode: { exact: "user"} }, config, qrCodeSuccessCallback);
+
+        // Select back camera or fail with `OverconstrainedError`.
+        html5QrCode.start({ facingMode: { exact: "environment"} }, config, qrCodeSuccessCallback);
+
     </script> 
-   <!-- my code instascan finish -->
+
 
 <script type="text/javascript">
 
@@ -246,13 +181,6 @@ var intervalId = window.setInterval(function(){
 
 }, 3000);
 
-function onScanSuccess(decodedText, decodedResult) {
-    console.log(`Code scanned = ${decodedText}`, decodedResult);
-}
-var html5QrcodeScanner = new Html5QrcodeScanner(
-	"qr-reader", { fps: 60, qrbox: 250 });
-
-html5QrcodeScanner.render(onScanSuccess); 
 
 </script>
 
