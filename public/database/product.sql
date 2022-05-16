@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2022 at 02:11 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.5
+-- Generation Time: May 16, 2022 at 09:42 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,12 +33,12 @@ CREATE TABLE `product` (
   `price` int(11) NOT NULL,
   `gst` int(11) NOT NULL,
   `lic_num` varchar(75) NOT NULL,
-  `mfg_date` datetime NOT NULL,
+  `mfg_date` varchar(255) NOT NULL,
   `ingredients` varchar(255) NOT NULL,
   `main_usage` varchar(255) NOT NULL,
   `useurl` varchar(225) NOT NULL,
   `fssai_code` varchar(225) NOT NULL,
-  `customer_care` varchar(15) NOT NULL,
+  `customer_care` varchar(50) NOT NULL,
   `net_wt` int(11) NOT NULL,
   `units` int(11) NOT NULL,
   `exp_date` varchar(255) NOT NULL

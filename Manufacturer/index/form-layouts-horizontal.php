@@ -298,9 +298,11 @@ if(isset($_POST['submit']))
                           <div class="col-sm-10">
                             <select class="form-select" name="category" id="exampleFormControlSelect1" aria-label="Default select example">
                               <option selected>Open this select Category</option>
-                              <option value="1">Food</option>
-                              <option value="2">Clothing</option>
-                              <option value="3">Accesories</option>
+                              <option value="1">Food & Beverages</option>
+                              <option value="2">Healthcare</option>
+                              <option value="3">Beauty & Hygiene</option>
+                              <option value="4">Others</option>
+
                             </select>
                           </div>
                         </div>
