@@ -2,35 +2,47 @@
 include('config.php');
 include('function.php');
 
+
 if(isset($_POST['submit']))
     {
-    $qr_code = $_POST['qr_code'].str_shuffle("agfbd");
+      
+    
+    $uid = $_SESSION['man_data']->id;
+    $bar_code = $_POST['bar_code'];
     $company_name = $_POST['company_name'];
-    $brand_name = $_POST["brand_name"];
-    $company_email = $_POST["company_email"];
+    $brand_name = $_POST['brand_name'];
+    $company_email = $_POST['company_email'];
     $product_img = $_FILES["uploadfile"]["name"];
     $product_img_tmp = $_FILES["uploadfile"]["tmp_name"];
     $folder = "product/".$product_img;
-    $product_name = $_POST["product_name"];
+    $product_name = $_POST['product_name'];
     $category =  $_POST["category"];
     $price =  $_POST["price"];
-    $lic_num = $_POST["lic_num"];
+    $gst=  $_POST["gst"];
+    $lic_num = $_POST['lic_num'];
     $mfg_date = $_POST["mfg_date"];
-    $ingredients = $_POST["ingredients"];
-    $main_usage = $_POST["main_usage"];
-    $useurl = $_POST["useurl"];
-    $fssai_code = $_POST["fssai_code"];
-    $customer_care = $_POST["customer_care"];
+    $ingredients = $_POST['ingredients'];
+    $main_usage = $_POST['main_usage'];
+    $useurl = $_POST['useurl'];
+    $fssai_code = $_POST['fssai_code'];
+    $customer_care = $_POST['customer_care'];
     $net_wt = $_POST["net_wt"];
     $exp_date = $_POST["exp_date"];
     $units = $_POST["units"]; 
+    $qr_code = rand(100000,999999);
+
+
+
+
 
     if (move_uploaded_file($product_img_tmp, $folder))  {
       $msg = "Image uploaded successfully";
+
+      $sql = "INSERT INTO `product` 
+(`uid`,`qr_code`,`bar_code`,`company_name`,`company_email`,`brand_name`,`product_name`,`product_img`,`category`,`price`,`gst`,`lic_num`,`main_usage`,`useurl`,`mfg_date`,`fssai_code`,`customer_care`,`ingredients`,`net_wt`,`units`,`exp_date`) VALUES ($uid,'$qr_code','$bar_code','$company_name','$company_email','$brand_name','$product_name','$product_img','$category',$price,$gst,'$lic_num','$main_usage','$useurl','$mfg_date','$fssai_code','$customer_care','$ingredients',$net_wt,$units,'$exp_date')";
+$query =mysqli_query($con,$sql);
       
-    $query = "INSERT INTO `product` ( `qr_code`, `company_name`,`brand_name`, `company_email`, `product_img`, `product_name`, `category`, `price`, `lic_num`,`mfg_date`,`ingredients`,`main_usage`,`useurl`,`fssai_code`,`customer_care`,`net_wt`,`exp_date`,`units`) VALUES
-    ('$qr_code','$company_name', '$brand_name','$company_email', '$product_img', '$product_name', '$category', '$price', '$lic_num','$mfg_date','$ingredients','$main_usage','$useurl','$fssai_code','$customer_care','$net_wt','$exp_date','$units')";
-    $query = mysqli_query($con,$query);
+    
     if($query)
     {
       ?>
@@ -130,7 +142,7 @@ if(isset($_POST['submit']))
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-            <!-- Dashboard -->
+            
             <li class="menu-item ">
               <a href="index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -226,8 +238,7 @@ if(isset($_POST['submit']))
                                 name="company_name"
                                 id="basic-icon-default-fullname"
                                 placeholder="ITC, Nestle, etc"
-                                aria-label="ITC, Nestle, etc"
-                                aria-describedby="basic-icon-default-fullname2"
+                                
                               />
                             </div>
                           </div>
@@ -245,8 +256,8 @@ if(isset($_POST['submit']))
                                 class="form-control"
                                 name="brand_name"
                                 placeholder="Sunfeast, Maggie, Marigold, etc"
-                                aria-label="Sunfeast, Maggie, Marigold, etc"
-                                aria-describedby="basic-icon-default-company2"
+                                <!-- aria-label="Sunfeast, Maggie, Marigold, etc"
+                                aria-describedby="basic-icon-default-company2" -->
                               />
                             </div>
                           </div>
@@ -262,8 +273,7 @@ if(isset($_POST['submit']))
                                 name="company_email"
                                 class="form-control"
                                 placeholder="john.doe@work.com"
-                                aria-label="john.doe@work.com"
-                                aria-describedby="basic-icon-default-email2"
+                                
                               />
                             </div>
                             <div class="form-text">You can use letters, numbers & periods</div>
@@ -321,7 +331,7 @@ if(isset($_POST['submit']))
                               name="fssai_code"
                               class="form-control"
                               id="fssai_code"
-                              placeholder="ACME Inc."
+                              placeholder="45667767."
                             />
                           </div>
                         </div>
@@ -403,8 +413,7 @@ if(isset($_POST['submit']))
                                 id="basic-icon-default-email"
                                 class="form-control"
                                 placeholder="Customer Care"
-                                aria-label="Customer Care"
-                                aria-describedby="basic-icon-default-email2" 
+                               
                               />
                               <!-- <span id="basic-icon-default-email2" class="input-group-text">@example.com</span> -->
                             </div>
@@ -438,8 +447,8 @@ if(isset($_POST['submit']))
                               name="ingredients"
                               class="form-control"
                               placeholder="milk(40%) , water (7.5%)"
-                              aria-label="Hi, Do you have a moment to talk Joe?"
-                              aria-describedby="basic-icon-default-message2"
+                              
+
                             ></textarea>
                           </div>
                         </div>
@@ -451,8 +460,7 @@ if(isset($_POST['submit']))
                               name="main_usage"
                               class="form-control"
                               placeholder="Used for drinking and used as a Ingredient in a recipe"
-                              aria-label="Hi, Do you have a moment to talk Joe?"
-                              aria-describedby="basic-icon-default-message2"
+                             
                             ></textarea>
                           </div>
                         </div>
@@ -464,8 +472,7 @@ if(isset($_POST['submit']))
                               id="basic-default-message"
                               class="form-control"
                               placeholder="https://example.youtube.com"
-                              aria-label="Hi, Do you have a moment to talk Joe?"
-                              aria-describedby="basic-icon-default-message2"
+                              
                             />
                             
                           </div>
@@ -476,7 +483,7 @@ if(isset($_POST['submit']))
                             <input
                               class="form-control"
                               name="mfg_date"
-                              type="datetime-local"
+                              type="datetime"
                               value="2021-06-18T12:30:00"
                               id="html5-datetime-local-input"
                             />
@@ -511,7 +518,7 @@ if(isset($_POST['submit']))
                           <div class="col-sm-10">
                             <input
                               type="text"
-                              name="qr_code"
+                              name="bar_code"
                               class="form-control"
                               id="basic-default-company"
                               placeholder="Bar Code of your Existing Product"
