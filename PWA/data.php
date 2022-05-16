@@ -5,8 +5,11 @@
 	$db="Validar";
 	$conn = mysqli_connect($servername, $username, $password,$db);
 
-    $qr_code = $_POST['qr_code'];
-     
+	if (!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+
+	echo "Woeking";
 
 
 ?>

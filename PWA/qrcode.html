@@ -149,10 +149,22 @@
         $("input[type='text']:last-child").focus();
         const html5QrCode = new Html5Qrcode("reader");
         // on success funtion call 
+        var sound = new Audio("assets/scanned.mp3");
         const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-            var sound = new Audio("assets/scanned.mp3"); 
             sound.play();
-            alert(decodedText);       
+            sound.onended = function(){ 
+            $.ajax({
+            url: "data.php",
+            type: 'POST',
+            dataType: 'html',
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                window.location.href = "data.php?id="+decodedText;
+                }
+            });
+        }
 
         };
         const config = { fps: 15, qrbox: { width: 250, height: 150 } };
