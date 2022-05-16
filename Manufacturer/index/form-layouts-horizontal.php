@@ -2,6 +2,8 @@
 include('config.php');
 include('function.php');
 
+
+
 if(isset($_POST['submit']))
     {
     $qr_code = $_POST['qr_code'].str_shuffle("agfbd");

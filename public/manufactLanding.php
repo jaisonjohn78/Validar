@@ -4,10 +4,15 @@ include 'config.php';
 include 'function.php';
 
 error_reporting(0);
-
-if (isset($_SESSION["id"])) {
-  header("Location: welcome.php");
+//kareena 
+if(isset($_SESSION["man_data"])){
+  header("Location:.././Manufacturer/index/index.php");
 }
+
+//kareena commented this
+// if (isset($_SESSION["id"])) {
+//   header("Location: welcome.php");
+// }
 
 if (isset($_POST["signup"])) {
   $full_name = mysqli_real_escape_string($conn, $_POST["signup_full_name"]);
@@ -16,6 +21,7 @@ if (isset($_POST["signup"])) {
   $cpassword = mysqli_real_escape_string($conn, md5($_POST["signup_cpassword"]));
 
   $check_email = mysqli_num_rows(mysqli_query($conn, "SELECT email FROM manufacturer WHERE email='$email'"));
+  
 
   if ($password !== $cpassword) {
     echo "<script>alert('Password did not match.');</script>";
@@ -26,6 +32,9 @@ if (isset($_POST["signup"])) {
     $result = mysqli_query($conn, $sql);
     if ($result) {
       echo "<script>alert('Registration successful.');</script>";
+     
+      header("Location:../Manufacturer/index/index.php");
+      
     } else {
       echo "<script>alert('Registration failed.');</script>";
 }
@@ -39,9 +48,15 @@ if (isset($_POST["signin"])) {
   $check_email = mysqli_query($conn, "SELECT id FROM manufacturer WHERE email='$email' AND password='$password' AND status='1'");
 
   if (mysqli_num_rows($check_email) > 0) {
+     //kareena tried to keep sessions
+    $_SESSION["man_data"]=$check_email->fetch_object();
+    print_r($_SESSION['man_data']);
     $row = mysqli_fetch_assoc($check_email);
     $_SESSION["user_id"] = $row['id'];
-    // header("Location: welcome.php");
+   
+    
+    
+    header("Location: ../Manufacturer/index/index.php");
   } else {
     echo "<script>alert('Login details is incorrect. Please try again.');</script>";
   }
@@ -49,14 +64,17 @@ if (isset($_POST["signin"])) {
 
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
   <title>Validar</title>
+ 
   <style>
     .ball {
   position: absolute;

@@ -5,10 +5,17 @@ include 'config.php';
 session_start();
 
 error_reporting(0);
-
-if (isset($_SESSION["user_id"])) {
-  header("Location: welcome.php");
+if(!isset($_SESSION['man_data'])){
+  echo "Not logged in !";
 }
+if(!isset($_SESSION['user_id'])){
+  echo "NO !";
+}
+//kareena commented this
+// if (isset($_SESSION["user_id"])) {
+//   header("Location: welcome.php");
+// }
+
 
 if (isset($_POST["signup"])) {
   $full_name = mysqli_real_escape_string($conn, $_POST["signup_full_name"]);

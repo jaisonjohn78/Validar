@@ -1,5 +1,18 @@
+<?php
+
+include 'config.php';
+
+if(!isset($_SESSION["man_data"])){
+  header("Location:../../public/manufactLanding.php");
+}
+
+
+
+?>
+
 <!DOCTYPE html>
 <html
+
   lang="en"
   class="light-style layout-menu-fixed"
   dir="ltr"
@@ -8,6 +21,7 @@
   data-template="vertical-menu-template-free"
 >
   <head>
+
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -15,7 +29,7 @@
     />
 
     <title>Validar Dashboard</title>
-
+<!-- <img src="../../public/manufactLanding.php" alt=""> -->
     <meta name="description" content="" />
 
     <!-- Favicon -->
@@ -50,10 +64,12 @@
   </head>
 
   <body>
+    
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
+       
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
@@ -349,6 +365,7 @@
                     <div class="row row-bordered g-0">
                       <div class="col-md-8">
                         <h5 class="card-header m-0 me-2 pb-3">Company Growth</h5>
+                         
                         <div id="totalRevenueChart" class="px-2"></div>
                       </div>
                       <div class="col-md-4">
