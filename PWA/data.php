@@ -31,7 +31,7 @@
         
 
         
-        echo $original_category;
+    echo  $original_category;
       $price =$row['price'];
       echo $price;
 
