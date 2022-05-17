@@ -1,10 +1,9 @@
 <?php
-
 include 'config.php';
-include 'function.php';
 $id = $_SESSION['man_data']->id;
-$sql ="SELECT * FROM `product` WHERE `uid`=$id";
-$query = mysqli_query($con,$sql);
+$sql = "SELECT * FROM product WHERE uid= $id";
+$result = mysqli_query($con, $sql);
+
 
 
 
@@ -164,33 +163,19 @@ $query = mysqli_query($con,$sql);
 
               
               <?php
-              
-              
-              while ($data = $query->fetch_object()) {
-                $users[] = $data;
-              }
 
-                foreach($users as $user){
+                      if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                          echo "<div class='col'> <div class='card h-100'> <img class='card-img-top' src='product/". $row['product_img'] ."' alt='Card image cap'/> <div class='card-body'> <h4 class='card-title'>". $row['product_name'] ."</h4> <p class='card-text text-dark'>". $row['timestamp'] ."<br> Product ID: ". $row['id'] ." </p><h5 class='card-title'>". $row['product_name'] ."</h5><a href='qr-code.php?id=".$row['id']."' class='btn btn-primary btn-lg active' role='button' aria-pressed='true'>View More</a></div></div></div>";
+                        }
+                      } else {
+                        echo "<h1>No Products</h1>";
+                      }
                 ?>                      
                  
-                <div class="col">
-                  <div class="card h-100">
-                    <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap" />
-                    <div class="card-body">
-                      <h5 class="card-title"><?php echo $user->company_name;?></h5>
-                      <p class="card-text">
-                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                        This content is a little bit longer.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                
               
-                <?php
-              
-                }
-              
-              ?>
+           
               </div>
               
               

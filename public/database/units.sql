@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2022 at 10:11 AM
+-- Generation Time: May 17, 2022 at 11:09 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -31,10 +31,12 @@ CREATE TABLE `units` (
   `id` int(11) NOT NULL,
   `p_id` int(11) NOT NULL,
   `qr_code` varchar(255) NOT NULL,
-  `scans` int(11) NOT NULL,
-  `ip_address` varchar(255) NOT NULL,
-  `location` varchar(255) NOT NULL,
-  `timestamp` varchar(255) NOT NULL
+  `scans` int(11) NOT NULL DEFAULT 0,
+  `ip_address` varchar(255) DEFAULT 'Not Yet Scanned',
+  `location` varchar(255) DEFAULT 'Not Yet Scanned	',
+  `isp` varchar(255) DEFAULT NULL,
+  `timestamp` varchar(255) DEFAULT NULL,
+  `status` enum('0','1') NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

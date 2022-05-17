@@ -1,11 +1,11 @@
 <?php
 include('config.php');
+// include('function.php');
 
+$uid = $_SESSION['man_data']->id;
 if(isset($_POST['submit']))
     {
-    
-    $uid = $_SESSION['man_data']->id;
-    $bar_code = $_POST['bar_code'];
+    // prx($_POST);
     $company_name = $_POST['company_name'];
     $brand_name = $_POST['brand_name'];
     $company_email = $_POST['company_email'];
@@ -15,6 +15,7 @@ if(isset($_POST['submit']))
     $product_name = $_POST['product_name'];
     $category =  $_POST["category"];
     $price =  $_POST["price"];
+    $cost = $_POST["cost"];
     $gst =  $_POST["gst"];
     $lic_num = $_POST['lic_num'];
     $mfg_date = $_POST["mfg_date"];
@@ -27,6 +28,7 @@ if(isset($_POST['submit']))
     $exp_date = $_POST["exp_date"];
     $units = $_POST["units"]; 
     $qr_code = rand(100000,999999);
+    $today = date("F j, Y, g:i a"); 
 
 
 
@@ -35,18 +37,28 @@ if(isset($_POST['submit']))
     if (move_uploaded_file($product_img_tmp, $folder)) {
       $msg = "Image uploaded successfully";
 
-      $sql = "INSERT INTO `product` (`uid`,`qr_code`,`bar_code`,`company_name`,`company_email`,`brand_name`,`product_name`,`product_img`,`category`,`price`,`gst`,`lic_num`,`main_usage`,`useurl`,`mfg_date`,`fssai_code`,`customer_care`,`ingredients`,`net_wt`,`units`,`exp_date`) VALUES ($uid,'$qr_code','$bar_code','$company_name','$company_email','$brand_name','$product_name','$product_img','$category',$price,$gst,'$lic_num','$main_usage','$useurl','$mfg_date','$fssai_code','$customer_care','$ingredients',$net_wt,$units,'$exp_date')";
-      $query = mysqli_query($con,$sql);
+      $query = mysqli_query($con,"INSERT INTO `product` (`uid`,`qr_code`,`company_name`,`company_email`,`brand_name`,`product_name`,`product_img`,`category`,`price`,`gst`,`lic_num`,`main_usage`,`useurl`,`mfg_date`,`fssai_code`,`customer_care`,`ingredients`,`net_wt`,`units`,`exp_date`, `timestamp`) VALUES ($uid,'$qr_code','$company_name','$company_email','$brand_name','$product_name','$product_img','$category',$price,$gst,'$lic_num','$main_usage','$useurl','$mfg_date','$fssai_code','$customer_care','$ingredients', '$net_wt' ,$units,'$exp_date', '$today')") or die(mysqli_error($con));
+      $last_id = mysqli_insert_id($con);
+      $total_cost = $cost * $units;
+      $query = mysqli_query($con,"UPDATE `manufacturer` SET `cost`=cost+$total_cost WHERE `id` = '$uid'") or die(mysqli_error($con));
       
     
     if($query)
     {
+      $query_category = mysqli_query($con,"UPDATE `category` SET`items`= `items` + '$units' WHERE `id` = '$category'") or die(mysqli_error($con));
       
+      for($i=1;$i<=$units;$i++)
+      {
+       
+        $query_units = mysqli_query($con,"INSERT INTO `units`( `p_id`, `qr_code`) VALUES ('$last_id','$qr_code$i')") or die(mysqli_error($con));
+      }
+
       ?>
     <script>
       alert("Your Product has Successfully been added !!");
     </script>    
 <?php
+    header('location: qr-code.php?id='.$last_id.'');
     }
     else{
 ?>
@@ -217,7 +229,7 @@ if(isset($_POST['submit']))
                   <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
                       <h5 class="mb-0">Enter Details for your product</h5>
-                      <small class="text-muted float-end">My Product <?php echo $uid; ?></small>
+                      <small class="text-muted float-end">Manufacturer ID <?php echo $uid; ?></small>
                     </div>
                     <div class="card-body">
                       <form action="form-layouts-horizontal.php" method="post" enctype="multipart/form-data">
@@ -348,7 +360,7 @@ if(isset($_POST['submit']))
                           <label class="col-sm-2 col-form-label" for="basic-default-company">Price Per Unit</label>
                           <div class="col-sm-4">
                             <div class="input-group">
-                              <span class="input-group-text">$</span>
+                              <span class="input-group-text">&#8377;</span>
                               <input
                                 type="text"
                                 name="price"
@@ -362,17 +374,34 @@ if(isset($_POST['submit']))
                           <label class="col-sm-2 col-form-label" for="basic-default-company">GST Per Unit</label>
                           <div class="col-sm-4">
                             <div class="input-group">
-                              <span class="input-group-text">$</span>
+                              <span class="input-group-text">&#8377;</span>
                               <input
                                 type="text"
                                 name="gst"
                                 class="form-control"
                                 placeholder="Amount"
-                                aria-label="Amount (to the nearest dollar)"
+                                
                               />
                               <span class="input-group-text">.00</span>
                             </div>
                           </div>
+                        </div>
+                        <div class="row mb-3 d-flex">
+                          <label class="col-sm-2 col-form-label" for="basic-default-company">Cost Per Unit</label>
+                          <div class="col-sm-4">
+                            <div class="input-group">
+                              <span class="input-group-text">&#8377;</span>
+                              <input
+                                type="text"
+                                name="cost"
+                                class="form-control"
+                                placeholder="Amount"
+                                
+                              />
+                              <span class="input-group-text">.00</span>
+                            </div>
+                          </div>
+                          
                         </div>
                         
                         <div class="row mb-3">
@@ -400,23 +429,7 @@ if(isset($_POST['submit']))
                         </div>
                         
                        
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-icon-default-email">Email</label>
-                          <div class="col-sm-10">
-                            <div class="input-group input-group-merge">
-                              <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                              <input
-                                type="email"
-                                id="basic-icon-default-email"
-                                class="form-control"
-                                placeholder="Customer Care"
-                               
-                              />
-                              <!-- <span id="basic-icon-default-email2" class="input-group-text">@example.com</span> -->
-                            </div>
-                            <div class="form-text">You can use letters, numbers & periods</div>
-                          </div>
-                        </div>
+                        
                         <div class="row mb-3">
                           <label class="col-sm-2 form-label" for="basic-icon-default-phone">Customer Care Number</label>
                           <div class="col-sm-10">
@@ -476,11 +489,11 @@ if(isset($_POST['submit']))
                         </div>
                         <div class="mb-3 row">
                           <label for="html5-datetime-local-input" class="col-md-2 col-form-label">Manufacturing DateTime</label>
-                          <div class="col-md-10">
+                          <div class="col-md-4">
                             <input
                               class="form-control"
                               name="mfg_date"
-                              type="datetime"
+                              type="datetime-local"
                               value="2021-06-18T12:30:00"
                               id="html5-datetime-local-input"
                             />
@@ -510,18 +523,7 @@ if(isset($_POST['submit']))
                             />
                           </div>
                         </div>
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-company">Bar Code</label>
-                          <div class="col-sm-10">
-                            <input
-                              type="text"
-                              name="bar_code"
-                              class="form-control"
-                              id="basic-default-company"
-                              placeholder="Bar Code of your Existing Product"
-                            />
-                          </div>
-                        </div>
+                        
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
                             <button type="submit" class="btn btn-primary" name="submit">Send</button>
@@ -546,7 +548,7 @@ if(isset($_POST['submit']))
                     document.write(new Date().getFullYear());
                   </script>
                   , made with ❤️ by
-                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">SXCA Research Team</a>
+                  <a target="_blank" class="footer-link fw-bolder">SXCA Research Team</a>
                 </div>
               
               </div>
@@ -587,6 +589,9 @@ if(isset($_POST['submit']))
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script>
+      // if ( window.history.replaceState ) {
+      //   window.history.replaceState( null, null, window.location.href );
+      // }
       function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

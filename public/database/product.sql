@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2022 at 09:15 AM
+-- Generation Time: May 17, 2022 at 11:09 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -37,27 +37,21 @@ CREATE TABLE `product` (
   `product_img` varchar(225) NOT NULL,
   `brand_name` varchar(255) NOT NULL,
   `product_name` varchar(255) NOT NULL,
-  `category` varchar(255) NOT NULL,
+  `category` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `gst` int(11) NOT NULL,
-  `lic_num` varchar(75) NOT NULL,
+  `lic_num` varchar(100) NOT NULL,
   `mfg_date` varchar(255) NOT NULL,
   `ingredients` varchar(255) NOT NULL,
   `main_usage` varchar(255) NOT NULL DEFAULT ' ',
   `useurl` varchar(225) NOT NULL,
   `fssai_code` varchar(225) DEFAULT NULL,
-  `customer_care` varchar(50) NOT NULL,
-  `net_wt` int(11) NOT NULL,
+  `customer_care` varchar(100) NOT NULL,
+  `net_wt` varchar(255) NOT NULL,
   `units` int(11) NOT NULL,
-  `exp_date` varchar(255) NOT NULL
+  `exp_date` varchar(255) NOT NULL,
+  `timestamp` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `product`
---
-
-INSERT INTO `product` (`id`, `uid`, `qr_code`, `bar_code`, `company_name`, `company_email`, `product_img`, `brand_name`, `product_name`, `category`, `price`, `gst`, `lic_num`, `mfg_date`, `ingredients`, `main_usage`, `useurl`, `fssai_code`, `customer_care`, `net_wt`, `units`, `exp_date`) VALUES
-(1, 1, '123456', '123456', 'jajaj', 'j@gmail.com', 'img_src', 'ITC', 'Bistuct', '1', 150, 20, '8512865', 'asdf', 'sadadads', 'asfddf', 'adsfasdf', '1234', '68415', 252, 10, 'tomotoodf');
 
 --
 -- Indexes for dumped tables
@@ -78,7 +72,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

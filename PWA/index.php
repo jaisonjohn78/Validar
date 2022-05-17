@@ -176,20 +176,20 @@ error_reporting(0);
 <div class="bottom-nav">
     <div class="bottom-inner">
         <div class="bottom-main">
-            <a href="index.html"><div class="nav-items">
+            <a href="index.php"><div class="nav-items">
                 <div class="nav-item">
                     <span class="las la-home"></span>
                     <p>Home</p>
                 </div>
             </div></a>
 
-            <a href="qrcode.html"><div class="nav-item-main">
+            <a href="qrcode.php"><div class="nav-item-main">
                 <div>
                     <span class="las la-qrcode"></span>
                 </div>
             </div></a>
 
-            <a href="profile.html"><div class="nav-items">
+            <a href="profile.php"><div class="nav-items">
                 <div class="nav-item">
                     <span class="las la-info"></span>
                     <p>About</p>

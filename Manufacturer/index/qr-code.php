@@ -1,54 +1,17 @@
 <?php
 include('config.php');
-include('function.php');
+// $id = $_SESSION['man_data']->id;
+$id = $_GET['id'];
+$sql = "SELECT * FROM units WHERE p_id='$id'";
+$result = mysqli_query($con, $sql);
 
-if(isset($_POST['submit']))
-    {
-    $company_name = $_POST['company_name'];
-    $brand_name = $_POST["brand_name"];
-    $company_email = $_POST["company_email"];
-    $product_img = $_FILES["uploadfile"]["name"];
-    $product_img_tmp = $_FILES["uploadfile"]["tmp_name"];
-    $folder = "product/".$product_img;
-    $product_name = $_POST["product_name"];
-    $category =  $_POST["category"];
-    $price =  $_POST["price"];
-    $lic_num = $_POST["lic_num"];
-    $mfg_date = $_POST["mfg_date"];
-    $ingredients = $_POST["ingredients"];
-    $main_usage = $_POST["main_usage"];
-    $useurl = $_POST["useurl"];
-    $fssai_code = $_POST["fssai_code"];
-    $customer_care = $_POST["customer_care"];
-    $net_wt = $_POST["net_wt"];
-    $exp_date = $_POST["exp_date"];
-    $units = $_POST["units"]; 
+$linkcode = substr("", 0, 5);
 
-    if (move_uploaded_file($product_img_tmp, $folder))  {
-      $msg = "Image uploaded successfully";
-      
-    $query = "INSERT INTO `product` ( `company_name`,`brand_name`, `company_email`, `product_img`, `product_name`, `category`, `price`, `lic_num`,`mfg_date`,`ingredients`,`main_usage`,`useurl`,`fssai_code`,`customer_care`,`net_wt`,`exp_date`,`units`) VALUES
-    ('$company_name', '$brand_name','$company_email', '$product_img', '$product_name', '$category', '$price', '$lic_num','$mfg_date','$ingredients','$main_usage','$useurl','$fssai_code','$customer_care','$net_wt','$exp_date','$units')";
-    $query = mysqli_query($con,$query);
-    if($query)
-    {
-      ?>
-    <script>
-      alert("Your Product has Successfully been added !!");
-    </script>    
-<?php
-    }
-    else{
-?>
-<script>
-      alert("Oops!, Seems something went wrong... Please try again later");
-    </script>
-        <?php
-    }
-  }
-    }else{
-      $msg = "Failed to upload image";
-    }
+$unit_sql = "SELECT * FROM units ";
+// $row = mysqli_fetch_assoc($result);
+
+
+
 
 ?>
 
@@ -99,11 +62,14 @@ if(isset($_POST['submit']))
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.js"></script>
+  <style>
+    table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
+      text-align: center !important;
+    }
+  </style>
   </head>
 
   <body>
@@ -143,7 +109,7 @@ if(isset($_POST['submit']))
                 <li class="menu-item active">
                   <a href="form-layouts-horizontal.php" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-detail"></i>
-                    <div data-i18n="Horizontal Form">QR Generation</div>
+                    <div data-i18n="Horizontal Form">QR List</div>
                   </a>
                 </li> 
             </li>
@@ -207,23 +173,23 @@ if(isset($_POST['submit']))
                   <div class="card">
                       <div class="card-body">
                       <div class="table-responsive text-center">
-                      <table class="table user-table text-center ">
+                      <table class="table user-table text-center " id="mytable">
                         <thead>
                           <tr>
                             <th class="border-top-0">
                               #
                             </th>
                             <th class="border-top-0">
-                              Product Name
+                              QR Code
                             </th>
                             <th class="border-top-0">
                               QR
                             </th>
                             <th class="border-top-0">
-                              MRP
+                              ID
                             </th>
                             <th class="border-top-0">
-                              Mgf Date
+                              Location Scanned
                             </th>
                             <th class="border-top-0">
                               Total Scanned
@@ -231,20 +197,31 @@ if(isset($_POST['submit']))
                           </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody style="text-align:center;">
 
+                        <?php
 
+                            $path = "qrcode.php";
+                            $i = 1;
+                            if ($result->num_rows > 0) {
+                              while($row = mysqli_fetch_array($result))
+                              {
+                              $code = $row['qr_code'];
+                              $id = $row['id'];
+                              $status = $row['status'];
+                              if($status == 1){
+                              echo "<tr><td>".$i."</td><td> <h4>".$code."</h4> <a class='text-success'>Working</a> </td><td><img src='https://chart.apis.google.com/chart?cht=qr&chs=200x200&chco=1ab2ff&chl=".$code."'><br><b><a href='' onclick='print()'>Print</a> || <a href='https://chart.apis.google.com/chart?cht=qr&chs=200x200&chco=1ab2ff&chl=".$code."' target='_blank'>View</a></b></td><td>".$row['id']."</td><td>".$row['location']."</td><td>".$row['scans']."</td></tr>";
+                            } else {
+                              echo "<tr><td>".$i."</td><td> <h4>".$code."</h4> <a class='text-warning'>Blocked</a> </td><td><img src='https://chart.apis.google.com/chart?cht=qr&chs=200x200&chco=1ab2ff&chl=null'><br><b><a href=''>No Print</a> || <a href=''>No View</a></b></td><td>".$row['id']."</td><td>".$row['location']."</td><td>".$row['scans']."</td></tr>";
+                            }
+                            $i++;
+                              }
+                            } else {
+                              echo "<h1>No Products</h1>";
+                            }
+                        ?>  
                         
-                          <tr>
-                            <td></td>
-                            <td>
-                              <h4>Hellp</h4>
-                                <a href="qr_report.php">Report</a>
-                            </td>
-                            <td><img src="https://chart.apis.google.com/chart?cht=qr&chs=200x200&chco=1ab2ff&chl=<?php echo $qr_filter_paths ?>?id=<?php echo $id = 2 ?>" ><br><b><a href="">Download</a></b></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
+                          
 
 
 
@@ -292,50 +269,35 @@ if(isset($_POST['submit']))
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
     <script src="../assets/vendor/libs/popper/popper.js"></script>
     <script src="../assets/vendor/js/bootstrap.js"></script>
     <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="../assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-
-    <!-- Main JS -->
-    <script src="../assets/js/main.js"></script>
 
     <!-- Page JS -->
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script>
-      function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#blah').attr('src', e.target.result);
+      function delete_link(id) {
+        var r = prompt("Are you sure you want to delete product ID: " + id + "? \n\ntype 'CONFIRM' to delete");
+        if (r == 'CONFIRM') {
+          <?php
+            $sql = "DELETE FROM units WHERE `id` = $";
+            $result = mysqli_query($con, $sql);
+            mysqli_close($con);
+            
+            ?>
+            alert("Product Deleted");
+          return false;
+        } else {
+          return false;
         }
+      }
+      let table = new DataTable('#mytable', {
+      // options
 
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-$("#inputGroupFile02").change(function(){
-    readURL(this);
-});
-
-$("#defaultCheck300").change(function() {
-  var elem = document.getElementById("fssai_code");
-  elem.toggleAttribute("disabled");
-});
-
-$("#defaultCheck200").change(function() {
-  var elem = document.getElementById("lic_id");
-  elem.toggleAttribute("disabled");
-});
-      
+      });
     </script>
   </body>
 </html>
