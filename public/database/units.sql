@@ -24,38 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for table `units`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `units` (
   `id` int(11) NOT NULL,
-  `full_name` varchar(35) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `expense` int(11) NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `food` int(11) NOT NULL DEFAULT 0,
-  `health` int(11) NOT NULL DEFAULT 0,
-  `dairy` int(11) NOT NULL DEFAULT 0,
-  `beauty` int(11) NOT NULL DEFAULT 0,
-  `others` int(11) NOT NULL DEFAULT 0
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `expense`, `status`, `food`, `health`, `dairy`, `beauty`, `others`) VALUES
-(1, 'Jaison John', 'jaisonjohn78.com@gmail.com', '202cb962ac59075b964b07152d234b70', 0, 1, 0, 0, 0, 0, 0);
+  `p_id` int(11) NOT NULL,
+  `qr_code` varchar(255) NOT NULL,
+  `scans` int(11) NOT NULL,
+  `ip_address` varchar(255) NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `timestamp` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `users`
+-- Indexes for table `units`
 --
-ALTER TABLE `users`
+ALTER TABLE `units`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -63,10 +52,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT for table `units`
 --
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `units`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,11 +1,8 @@
 <?php
 include('config.php');
-include('function.php');
-
 
 if(isset($_POST['submit']))
     {
-      
     
     $uid = $_SESSION['man_data']->id;
     $bar_code = $_POST['bar_code'];
@@ -18,7 +15,7 @@ if(isset($_POST['submit']))
     $product_name = $_POST['product_name'];
     $category =  $_POST["category"];
     $price =  $_POST["price"];
-    $gst=  $_POST["gst"];
+    $gst =  $_POST["gst"];
     $lic_num = $_POST['lic_num'];
     $mfg_date = $_POST["mfg_date"];
     $ingredients = $_POST['ingredients'];
@@ -35,16 +32,16 @@ if(isset($_POST['submit']))
 
 
 
-    if (move_uploaded_file($product_img_tmp, $folder))  {
+    if (move_uploaded_file($product_img_tmp, $folder)) {
       $msg = "Image uploaded successfully";
 
-      $sql = "INSERT INTO `product` 
-(`uid`,`qr_code`,`bar_code`,`company_name`,`company_email`,`brand_name`,`product_name`,`product_img`,`category`,`price`,`gst`,`lic_num`,`main_usage`,`useurl`,`mfg_date`,`fssai_code`,`customer_care`,`ingredients`,`net_wt`,`units`,`exp_date`) VALUES ($uid,'$qr_code','$bar_code','$company_name','$company_email','$brand_name','$product_name','$product_img','$category',$price,$gst,'$lic_num','$main_usage','$useurl','$mfg_date','$fssai_code','$customer_care','$ingredients',$net_wt,$units,'$exp_date')";
-$query =mysqli_query($con,$sql);
+      $sql = "INSERT INTO `product` (`uid`,`qr_code`,`bar_code`,`company_name`,`company_email`,`brand_name`,`product_name`,`product_img`,`category`,`price`,`gst`,`lic_num`,`main_usage`,`useurl`,`mfg_date`,`fssai_code`,`customer_care`,`ingredients`,`net_wt`,`units`,`exp_date`) VALUES ($uid,'$qr_code','$bar_code','$company_name','$company_email','$brand_name','$product_name','$product_img','$category',$price,$gst,'$lic_num','$main_usage','$useurl','$mfg_date','$fssai_code','$customer_care','$ingredients',$net_wt,$units,'$exp_date')";
+      $query = mysqli_query($con,$sql);
       
     
     if($query)
     {
+      
       ?>
     <script>
       alert("Your Product has Successfully been added !!");
@@ -220,7 +217,7 @@ $query =mysqli_query($con,$sql);
                   <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
                       <h5 class="mb-0">Enter Details for your product</h5>
-                      <small class="text-muted float-end">My Product</small>
+                      <small class="text-muted float-end">My Product <?php echo $uid; ?></small>
                     </div>
                     <div class="card-body">
                       <form action="form-layouts-horizontal.php" method="post" enctype="multipart/form-data">
@@ -256,8 +253,8 @@ $query =mysqli_query($con,$sql);
                                 class="form-control"
                                 name="brand_name"
                                 placeholder="Sunfeast, Maggie, Marigold, etc"
-                                <!-- aria-label="Sunfeast, Maggie, Marigold, etc"
-                                aria-describedby="basic-icon-default-company2" -->
+                                aria-label="Sunfeast, Maggie, Marigold, etc"
+                                aria-describedby="basic-icon-default-company2"
                               />
                             </div>
                           </div>

@@ -4,12 +4,12 @@ include 'config.php';
 include 'function.php';
 
 error_reporting(0);
-//kareena 
+
 if(isset($_SESSION["man_data"])){
   header("Location:.././Manufacturer/index/index.php");
 }
 
-//kareena commented this
+
 // if (isset($_SESSION["id"])) {
 //   header("Location: welcome.php");
 // }
@@ -48,7 +48,6 @@ if (isset($_POST["signin"])) {
   $check_email = mysqli_query($conn, "SELECT id FROM manufacturer WHERE email='$email' AND password='$password' AND status='1'");
 
   if (mysqli_num_rows($check_email) > 0) {
-     //kareena tried to keep sessions
     $_SESSION["man_data"]=$check_email->fetch_object();
     print_r($_SESSION['man_data']);
     $row = mysqli_fetch_assoc($check_email);

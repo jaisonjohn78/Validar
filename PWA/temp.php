@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +34,7 @@
     <header>
         <nav>
             <div class="info">
-                <p>Welcome User!</p>
+                <p>Welcome <?php echo $row['full_name']; ?>!</p>
                 <p>Let's search your grocery food</p>
             </div>
             <div class="img" style="background-image: url(img/user.jpg)"></div>
@@ -151,16 +152,6 @@
         </div>
     </div>
 
-    <script>
 
-        $(document).ready(function(){
-            if (screen.width >= 700) {
-            document.location = "mobile_ui.html";
-            }
-            $(".splash").delay(2000).fadeOut(1000);
-            // $("body").removeClass("body-pink");
-
-        });
-    </script>
 </body>
 </html>

@@ -1,3 +1,16 @@
+<?php
+include 'config.php';
+
+if (!isset($_SESSION["user_id"])) {
+    header("Location: ../public/index.php");
+  }
+
+error_reporting(0);
+
+    $sql = "SELECT * FROM users WHERE id='" . $_SESSION["user_id"] . "'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
