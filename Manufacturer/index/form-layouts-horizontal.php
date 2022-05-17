@@ -1,10 +1,11 @@
 <?php
 include('config.php');
 
+$uid = $_SESSION['man_data']->id;
 if(isset($_POST['submit']))
     {
     
-    $uid = $_SESSION['man_data']->id;
+    
     $bar_code = $_POST['bar_code'];
     $company_name = $_POST['company_name'];
     $brand_name = $_POST['brand_name'];
@@ -217,7 +218,7 @@ if(isset($_POST['submit']))
                   <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
                       <h5 class="mb-0">Enter Details for your product</h5>
-                      <small class="text-muted float-end">My Product <?php echo $uid; ?></small>
+                      <small class="text-muted float-end">My Product <?php echo $uid;?></small>
                     </div>
                     <div class="card-body">
                       <form action="form-layouts-horizontal.php" method="post" enctype="multipart/form-data">

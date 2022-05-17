@@ -143,7 +143,7 @@ error_reporting(0);
                     </div>
                 </div></a>
 
-                <a href="qrcode.html"><div class="nav-item-main">
+                <a href="qrcode.php"><div class="nav-item-main">
                     <div>
                         <span class="las la-qrcode"></span>
                     </div>
