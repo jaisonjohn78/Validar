@@ -5,24 +5,54 @@
 
 
    
-    
-    // $man_id = $_SESSION['man_data'];
-	$sql = "SELECT * FROM users WHERE id='{$_SESSION["user_id"]}'";
-
+ 
     $get_id = $_GET['id'];
+
+    $flag='';
+    if(!is_numeric($get_id)){
+        $flag=true;
+    }
+    if($flag){
+        echo "<script>alert('this is not a valid qr code'); window.location.href='qrcode.php';</script>";
+        
+    }
+
+  
+
+    $sub_get_id = substr($get_id,0,strlen($get_id)-1);
+   
     
-    $sql = "SELECT * FROM product WHERE `qr_code`=$get_id";
+    $sql = "SELECT * FROM product WHERE `qr_code`=$sub_get_id";
 	$result = mysqli_query($conn, $sql);
 	$row = mysqli_fetch_assoc($result);
+
+    $unit_sql = "SELECT * FROM units WHERE `qr_code`=$get_id";
+    $unit_result = mysqli_query($conn, $unit_sql);
+    $unit_row = mysqli_fetch_assoc($unit_result);
+    $mystatus = $unit_row['status'];
+
+
+
+    $product_name = $row['product_name'];
+    $product_price = $row['price'];
+    $man_id =$row['uid'];
+    $users= $_SESSION["user_id"];
+
+    
 
     if(isset($_POST['cancel'])){
         header("Location:qrcode.php");
     }
     if(isset($_POST['buy'])){
+        $latitude = $_POST['latitude'];
+        $longitude = $_POST['longitude'];
+        // gettin user details ot get category of user table
         $get_users = "SELECT * FROM users WHERE id='" . $_SESSION["user_id"] . "'";
         $get_exec = mysqli_query($conn, $get_users);
         $row_get = mysqli_fetch_assoc($get_exec);
 
+
+        //getting category from category table to match with product table
         $category = $row['category'];
         $category_new = "SELECT * FROM category WHERE id=$category";
         $exec = mysqli_query($conn,$category_new);
@@ -30,22 +60,68 @@
         $original_category = $row_category['category'];
         
 
-        
-    echo  $original_category;
-      $price =$row['price'];
-      echo $price;
-
-
-
-
-       $sql_update = "UPDATE users SET `$original_category`=$price  WHERE id=1";
+        //fetching previous amount and adding amount of product ->updating
+  
+      $price =$row_get[$original_category] + $row['price'];
+      
+        //updation
+       $sql_update = "UPDATE users SET `$original_category`=$price  WHERE id=$user_id";
        $run =mysqli_query($conn,$sql_update);
        if($run){
-           echo "done";
+        echo "<script>alert('Product has been Successfully added to your purchase list ! '); 
+        
+        </script>";
        }else{
-           echo "NOOOOOOOOOOOOT DONE ";
+        "<script>alert('OOPS ! product not added to purchase list!'); </script>";
        }
+       $status = '0';
+       $update_status = "UPDATE units SET `status` = $status WHERE qr_code = $get_id";
+       $run_status = mysqli_query($conn,$update_status);
+       
+     //updating manufacturer details
+       $manufact_query =mysqli_query($conn,"SELECT * FROM manufacturer WHERE id = $man_id");
+       $man_result =mysqli_fetch_assoc($manufact_query);
+
+       $old_sales = $man_result['sales'];
+       $new_sales = $old_sales + $row['price'];
+ 
    
+       $qr_code=mysqli_query($conn,"SELECT amount,count,product_name,qr_code FROM cart WHERE product_name = '$product_name'");
+       $qr_result =mysqli_fetch_assoc($qr_code);
+       $product_name1 = $qr_result['product_name'];
+       $count = $qr_result['count'];
+    //    $up_qr_code = $qr_result['qr_code'];
+       $amount = $qr_result['amount'];
+       $up_amount = $amount + $product_price;
+       $up_count = $count + 1;
+       date_default_timezone_set("Asia/Kolkata");
+       $today = date("Y-m-d");
+
+       if($product_name == $product_name1){
+           mysqli_query($conn,"UPDATE cart SET `amount` = '$up_amount',`count`='$up_count',`timestamp`='$today' WHERE product_name = '$product_name1'");
+           header("location: qrcode.php?id=".$get_id."");
+       }else{
+           mysqli_query($conn,"INSERT INTO `cart`(`u_id`,`qr_code`,`product_name`,`price`,`amount`,`timestamp`,`latitude`,`longitude`) VALUES ('$users','$get_id','$product_name','$product_price','$product_price','$today','$latitude','$longitude')");
+           header("location: qrcode.php?id=".$get_id."");
+       }
+
+       $manufact_update = "UPDATE manufacturer SET `sales`=$new_sales  WHERE id=$man_id";
+       $run_manufact = mysqli_query($conn,$manufact_update);
+       if($run_manufact){
+        "<script>alert('Done'); </script>";
+       }else{
+        "<script>alert('OOPS ! not added'); </script>";
+       }
+    }
+
+    if($mystatus == 0 || $mystatus == NULL){
+        echo "<script>alert('This product is already sold out');</script>";
+        $msg= "This Product is Sold ! Please Check this product.";
+        $valid_msg="Sold";
+    }
+    else {
+        $msg= "This Product is Valid ! You can Buy this product.";
+        $valid_msg="Valid";
     }
 	
 ?>
@@ -61,13 +137,14 @@
 </head>
 <style>
     .details_ul li{
-        color:#333;
+        color:#033E3E;
         list-style:none;
         text-align:center;
     }
-    .details_ul li i{
-        text-decoration:underline;
+    .details_ul li b{
+        font-family: 'Poppins', sans-serif;
         font-size:1.15rem;
+        color:white;
         }
 
     .dates{
@@ -86,9 +163,16 @@
         margin:8px;
         width:100px;
         font-weight:bolder;
+        border:1px solid gray;
+    }
+    .valid_status{
+        background-color:green;
+        color:white;
+        padding:4px;
+        border-radius:7px;
     }
 </style>
-<body>
+<body onload = "getLocation();">
    
     <div class="product-header">
         <div class="flex">
@@ -111,14 +195,14 @@
             <small><?php echo $row_category['category'];?></small>
             <div class="details">
                 <div>
-                 <?php echo $row['net_wt'].'g';?>
+                 <?php echo $row['net_wt'];?>
                 </div>
                 <div>
                 <?php echo $row['company_name'];?>
                 </div>
                 <div>
                     <!-- <span class="las la-star"></span> -->
-                    Scaned(257)
+                    Scaned(<?php echo  $unit_row['scans']; ?>)
                 </div>
                 
             </div>
@@ -131,9 +215,34 @@
                     <!-- <span class="las la-minus"></span> -->
                     
                 
-                <input type="text" style="width:60px" value="&#8377 <?php echo $row['price'];?>">
+                <span style="width:60px;font-size:20px;">&#8377;<?php echo $row['price'];?></span>
                
             <!-- </div> -->
+        </div>
+        <div class="product-details section-wrapper">
+            <?php
+            
+            $location_query=mysqli_query($conn,"SELECT * FROM units WHERE qr_code = $get_id");
+            $location_result = mysqli_fetch_assoc($location_query);
+            
+            ?>
+            <h2>Scanning Results</h2>
+            <small><?php echo $row_category['category'];?></small>
+            <div class="details">
+                <div>Location:<br>
+                 <?php echo $location_result['location']?>
+                </div>
+                <div>
+                    <span class="valid_status"><?php echo $valid_msg?></span>
+                </div>
+                <div>
+                    <!-- <span class="las la-star"></span> -->
+                   timestamp: <br><?php echo $location_result['timestamp']?>
+                    <!-- Scaned(257) -->
+                </div>
+                
+            </div>
+            <small class="dates"><?php echo $msg;?></small><br>
         </div>
         
         <div class="product-desc section-wrapper">
@@ -143,26 +252,26 @@
             <div class="description">
                 <p>
                 <ul class="details_ul">
-                    <li><b><i style="color:white;">Brand name:</i></b> <br>
+                    <li><b style="color:white;">Brand name:</b> <br>
                 <?php echo $row['brand_name']?></li>
                 
-                    <li><b><i style="color:white;">ingredients:</i></b><br><?php echo $row['ingredients'];?></li>
+                    <li><b>Ingredients:</i></b><br><?php echo $row['ingredients'];?></li>
 
-                    <li><b><i style="color:white;">Main usage:</i></b><br><?php echo $row['main_usage'];?></li>
+                    <li><b>Main usage:</i></b><br><?php echo $row['main_usage'];?></li>
 
 
-                    <li><b><i style="color:white;">How to use? check below url:</i></b><br> <a href="<?php echo $row['useurl'];?>" style="text-decoration:underline">Click Here</a></li>
+                    <li><b>How to use? check below url:</i></b><br> <a href="<?php echo $row['useurl'];?>" style="text-decoration:underline">Click Here</a></li>
  
 
-                    <li><b><i style="color:white;">included GST:</i></b><br>&#8377;<?php echo $row['gst'].'/-';?></li>
+                    <li><b>Included GST:</i></b><br>&#8377;<?php echo $row['gst'].'/-';?></li>
 
                 
 
-                    <li><b><i style="color:white;">Net Weight:</i></b><br><?php echo $row['net_wt'].'g';?></li>
+                    <li><b>Net Weight:</i></b><br><?php echo $row['net_wt'];?></li>
 
-                    <li><b><i style="color:white;">Customer care:</i></b><br><?php echo $row['customer_care'];?></li>
+                    <li><b>Customer care:</i></b><br><?php echo $row['customer_care'];?></li>
 
-                    <li><b><i style="color:white;">fssai code:</i></b><br><?php echo $row['fssai_code'];?></li>
+                    <li><b>Fssai code:</i></b><br><?php echo $row['fssai_code'];?></li>
 
                  
 
@@ -172,8 +281,10 @@
                 </p>
                 
             </div>
-            <form action="" method="post">
+            <form action="" method="post" class="myForm" id="myform">
                <div class="button_div" style="text-align:center">
+                    <input type="hidden" name="latitude" value="">
+                    <input type="hidden" name="longitude" value="">
                    <input type="submit" name="buy" class="buttons" value="Buy">
                    <input type="submit" name="cancel" class="buttons" value="Cancel">
             </form>
@@ -183,6 +294,26 @@
         
         
     </main>
-    
+    <script type="text/javascript">
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition,showError);
+            }
+            
+        }
+        function showPosition(position) {
+            document.querySelector('.myForm input[name = "latitude"]').value=position.coords.latitude;
+            document.querySelector('.myForm input[name = "longitude"]').value=position.coords.longitude;
+        }
+        function showError(error){
+            switch(error.code){
+                case error.PERMISSION_DENIED:
+                    alert("You Must Allow The Request For Geolocation To Fill Out The Form");
+                    location.reload();
+                    break;
+            }
+        }
+        
+        </script>
 </body>
 </html>

@@ -498,7 +498,7 @@ main {
 }
 
 .description {
-    background: var(--main-color);
+    background: #97c8df;
     padding: 2rem;
     border-radius: 20px 20px 0 0;
     position: relative;
@@ -523,6 +523,7 @@ main {
 
 .description li {
     margin-bottom: .5rem;
+    font-family: 'Poppins', sans-serif;
 }
 
 .description ul {

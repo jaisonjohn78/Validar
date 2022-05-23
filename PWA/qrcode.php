@@ -6,10 +6,21 @@ if (!isset($_SESSION["user_id"])) {
   }
 
 error_reporting(0);
+$user_id= $_SESSION["user_id"];
+
 
     $sql = "SELECT * FROM users WHERE id='" . $_SESSION["user_id"] . "'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
+
+    
+   
+            $max_date=mysqli_query($conn,"SELECT MAX(timestamp) AS timestamp from cart");
+            // $date_result = mysqli_query($con,$max_date);
+            $date_row=mysqli_fetch_assoc($max_date);
+            $max_dates = $date_row['timestamp'];
+            
+        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,9 +34,12 @@ error_reporting(0);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.2.1/html5-qrcode.min.js" integrity="sha512-cuVnjPNH3GyigomLiyATgpCoCmR9T3kwjf94p0BnSfdtHClzr1kyaMHhUmadydjxzi1pwlXjM5sEWy4Cd4WScA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/dataTables.bootstrap4.min.css">
 
-
-
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.0/js/dataTables.bootstrap4.min.js"></script>
     
     
     <style>
@@ -50,26 +64,28 @@ error_reporting(0);
         #bill {
             position: relative;
             height: 100vh;
-            
+            font-size:12.3px;
         }
 
-        table, .category-item {
+        /* table, .category-item {
             
             width: 90vw;
             display: table;
             padding: 0px;
             padding-top: 0px !important;
+            
         }
         table {
             border-collapse: separate;
             border-spacing: 0 1.2em;
             transform: translate(0%,-6%);
             overflow: hidden;
+            border:1px solid gray;
         }
         td i {
             font-size: 1.9em;
             cursor: pointer;
-        }
+        } */
         #product {
             max-width: 30vw !important;
             overflow: hidden;
@@ -86,45 +102,53 @@ error_reporting(0);
 
     </style>
 </head>
-<body style="background-color: #34a9e0;">
+<body style="background-color: #97c8df;">
    
  
         <div class="header">
             <div id="reader" width="80vw"></div>
         </div>
-
-    
     <main>
         <div class="categories section-wrapper">
             <div class="category-items" id="bill">
                 <div class="category-item">
-                    <table id="myTable">
-                        <tr style="min-width: 100vw;">
-                            <th hidden>qrCode</th>
-                            <th width="5vw" style="padding-left: 5px;">sr No</th>
-                            <th>Product Name</th>
-                            <th width="5vw">MRP</th>
-                            <th>action</th>
-
-                          </tr>
-                          <tr>
-                            <td hidden><input type="text" name="qr_code" value=""></td>
-                            <td>1</td>
-                            <td id="product">Maria Anders</td>
-                            <td>100</td>
-                            <td><i class="las la-trash"></i></td>
-
-                          </tr>
-                          
-                          <tr class="qr">
-                            <td hidden><input type="text" name="qr_code" value=""></td>
-                            <td>6</td>
-                            <td id="product">Giovanni Rovelli</td>
-                            <td>55</td>
-                            <td><i class="las la-trash"></i></td>
-                          </tr>
+                
+                    <h3><?php echo $max_dates ?></h3>
+                    <hr style="background-color:#97c8df"/>
+                    <table class="table table-striped">
+                        <!--Table head-->
+                        <thead style="background-color:#34a9e0;color:white">
+                            <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Product Price</th>
+                                <th>Total Product</th>
+                                <th>Total Amount</th>
+                            </tr>
+                        </thead>
+                        <!--Table head-->
+                        <!--Table body-->
+                        <tbody>
+                        <?php
+                $user_id= $_SESSION["user_id"];
+                $res=mysqli_query($conn,"SELECT product_name,amount,count,price FROM cart WHERE u_id =' $user_id' AND timestamp = (SELECT MAX(timestamp) AS timestamp from cart)");                                    // die();
+                $i=1;
+                while($row=mysqli_fetch_assoc($res)){
+                   
+            ?>
+      <tr>
+          <th><?php echo $i++ ?></th>
+          <td><?php echo $row['product_name']?></td>
+          <td><?php echo $row['price']?></td>
+          <td><?php echo $row['count']?></td>
+          <td><?php echo $row['amount']?></td>
+          
+      </tr>
+      <?php } ?>
+                            
+                        </tbody>
+                        <!--Table body-->
                     </table>
-
                  </div>
             </div>
         </div>
@@ -136,7 +160,7 @@ error_reporting(0);
     <div class="bottom-nav">
         <div class="bottom-inner">
             <div class="bottom-main">
-                <a href="index.html"><div class="nav-items">
+                <a href="index.php"><div class="nav-items">
                     <div class="nav-item">
                         <span class="las la-home"></span>
                         <p>Home</p>
@@ -158,6 +182,12 @@ error_reporting(0);
             </div>
         </div>
     </div>
+    
+    <script>
+        $(document).ready(function () {
+    $('#example').DataTable();
+});
+    </script>
     <script type="text/javascript">
         $("input[type='text']:last-child").focus();
         const html5QrCode = new Html5Qrcode("reader");
@@ -174,7 +204,7 @@ error_reporting(0);
             processData: false,
             cache: false,
             success: function (data) {
-                window.location.href = "data.php?id="+decodedText;
+                window.location.href = "info.php?id="+decodedText;
                 }
             });
         }

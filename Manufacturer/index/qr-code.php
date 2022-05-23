@@ -211,8 +211,11 @@ $unit_sql = "SELECT * FROM units ";
                               $status = $row['status'];
                               if($status == 1){
                               echo "<tr><td>".$i."</td><td> <h4>".$code."</h4> <a class='text-success'>Working</a> </td><td><img src='https://chart.apis.google.com/chart?cht=qr&chs=200x200&chco=1ab2ff&chl=".$code."'><br><b><a href='' onclick='print()'>Print</a> || <a href='https://chart.apis.google.com/chart?cht=qr&chs=200x200&chco=1ab2ff&chl=".$code."' target='_blank'>View</a></b></td><td>".$row['id']."</td><td>".$row['location']."</td><td>".$row['scans']."</td></tr>";
-                            } else {
-                              echo "<tr><td>".$i."</td><td> <h4>".$code."</h4> <a class='text-warning'>Blocked</a> </td><td><img src='https://chart.apis.google.com/chart?cht=qr&chs=200x200&chco=1ab2ff&chl=null'><br><b><a href=''>No Print</a> || <a href=''>No View</a></b></td><td>".$row['id']."</td><td>".$row['location']."</td><td>".$row['scans']."</td></tr>";
+                            } if($status == 0){
+                              echo "<tr><td>".$i."</td><td> <h4>".$code."</h4> <a class='text-warning'>Sold</a> </td><td><img src='https://chart.apis.google.com/chart?cht=qr&chs=200x200&chco=1ab2ff&chl=".$code."'><br><b><a href=''>No Print</a> || <a href=''>No View</a></b></td><td>".$row['id']."</td><td>".$row['location']."</td><td>".$row['scans']."</td></tr>";
+                            } if($status == 2) {
+                              echo "<tr><td>".$i."</td><td> <h4>".$code."</h4> <a class='text-warning'>Blocked</a> </td><td><img src='https://chart.apis.google.com/chart?cht=qr&chs=200x200&chco=1ab2ff&chl=".$code."'><br><b><a href=''>No Print</a> || <a href=''>No View</a></b></td><td>".$row['id']."</td><td>".$row['location']."</td><td>".$row['scans']."</td></tr>";
+                              
                             }
                             $i++;
                               }

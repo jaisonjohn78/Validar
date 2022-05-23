@@ -1,5 +1,4 @@
 <?php
-
 include 'config.php';
 
 if(!isset($_SESSION["man_data"])){
@@ -7,7 +6,73 @@ if(!isset($_SESSION["man_data"])){
 }
 
 $id = $_SESSION['man_data']->id;
-$sql = "SELECT * FROM manufacturer WHERE uid= $id";
+$sql = "SELECT * FROM manufacturer WHERE id= $id";
+$result = mysqli_query($con,$sql);
+$row=mysqli_fetch_assoc($result);
+$sales = $row['sales'];
+$cost = $row['cost'];
+$profit = $sales - $cost;
+$profit_per = $profit/100;
+if($sales == 0 && $cost == 0){
+  $growth_margin = 0; 
+} else {
+  if($sales == 0) {
+    $growth_margin = 0;
+  } else {
+    $growth_margin = sprintf('%.2f',($sales-$cost)/$sales*100);
+    if($growth_margin < 0){
+      $growth_margin = 0;
+    }
+  } 
+}
+
+$sales_per = $sales/100;
+// sprintf('%.2f', $num)
+$first = "SELECT count(category) AS category FROM product WHERE uid = $id AND category = 1";
+$first_res = mysqli_query($con,$first);
+$first_row=mysqli_fetch_assoc($first_res);
+$first_category = $first_row['category'];
+
+$second = "SELECT count(category) AS category FROM product WHERE uid = $id AND category = 2";
+$second_res = mysqli_query($con,$second);
+$second_row=mysqli_fetch_assoc($second_res);
+$second_category = $second_row['category'];
+
+$third = "SELECT count(category) AS category FROM product WHERE uid = $id AND category = 3";
+$third_res = mysqli_query($con,$third);
+$third_row=mysqli_fetch_assoc($third_res);
+$third_category = $third_row['category'];
+
+$fifth = "SELECT count(category) AS category FROM product WHERE uid = $id AND category = 4";
+$fifth_res = mysqli_query($con,$fifth);
+$fifth_row=mysqli_fetch_assoc($fifth_res);
+$fifth_category = $fifth_row['category'];
+
+$fourth = "SELECT count(category) AS category FROM product WHERE uid = $id AND category = 5";
+$fourth_res = mysqli_query($con,$fourth);
+$fourth_row=mysqli_fetch_assoc($fourth_res);
+$fourth_category = $fourth_row['category'];
+
+$to_order = "SELECT sum(count) AS count FROM cart ";
+$order_result = mysqli_query($con,$to_order);
+$order_row=mysqli_fetch_assoc($order_result);
+$total_order = $order_row['count'];
+
+$scan = "SELECT sum(scans) AS scans FROM units ";
+$scan_result = mysqli_query($con,$scan);
+$scan_row=mysqli_fetch_assoc($scan_result);
+$scan_total = $scan_row['scans'];
+
+$total = "SELECT count(category) AS category FROM product WHERE uid = $id";
+$product_res = mysqli_query($con,$total);
+$product_row=mysqli_fetch_assoc($product_res);
+$total_product = $product_row['category'];
+
+$location = "SELECT latitude,longitude from cart where id = (SELECT MAX(id) AS id from cart)";
+$location_res = mysqli_query($con,$location);
+$location_row=mysqli_fetch_assoc($location_res);
+// $latitude = $location_row['latitude'];
+// $longitude = $location_row['longitude'];
 
 ?>
 
@@ -89,7 +154,7 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-            <!-- Dashboard -->
+         
             <li class="menu-item active">
               <a href="index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -206,7 +271,7 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block"><?php echo $full_name; ?></span>
+                            <span class="fw-semibold d-block"><?php echo $row['full_name']; ?></span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>
@@ -215,12 +280,14 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
-
+                    <div class="flex-grow-1">
+                      <small class="text-muted px-1"><?php echo $row['email']; ?></small><br>
+                    </div>
                     <li>
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.php">
+                      <a class="dropdown-item" href="logout.php">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>
@@ -245,13 +312,12 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                     <div class="d-flex align-items-end row">
                       <div class="col-sm-7">
                         <div class="card-body">
-                          <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
+                          <h5 class="card-title text-primary">Congratulations <?php echo $row['full_name']; ?>! 🎉</h5>
                           <p class="mb-4">
-                            You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in
-                            your profile.
+                            You have done <span class="fw-bold"><?php echo $growth_margin ?>%</span> more sales today. You can check and keep track on your products
                           </p>
 
-                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
+                          <a href="javascript:;" class="btn btn-sm btn-outline-primary">View my products</a>
                         </div>
                       </div>
                       <div class="col-sm-5 text-center text-sm-left">
@@ -299,8 +365,19 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">Profit</span>
-                          <h3 class="card-title mb-2">&#8377;12,628</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                          <h3 class="card-title mb-2">&#8377;<?php echo $profit?></h3>
+                          <?php 
+                            if($profit_per > 0) {
+                            ?>
+                            <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i><?php echo $profit_per ?>%</small>
+                          <?php
+                            }else {
+                            ?>
+                              <small style="color: red;" class="fw-semibold"><i class="bx bx-down-arrow-alt"></i><?php echo $profit_per ?>%</small>
+                            <?php
+                            }
+                          ?>
+
                         </div>
                       </div>
                     </div>
@@ -333,8 +410,8 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                             </div>
                           </div>
                           <span>Sales</span>
-                          <h3 class="card-title text-nowrap mb-1">&#8377;4,679</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                          <h3 class="card-title text-nowrap mb-1">&#8377;<?php echo $row['sales'];?></h3>
+                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> <?php echo $sales_per ?>%</small>
                         </div>
                       </div>
                     </div>
@@ -345,7 +422,7 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                   <div class="card">
                     <div class="row row-bordered g-0">
                       <div class="col-md-8">
-                        <h5 class="card-header m-0 me-2 pb-3">Company Growth</h5>
+                        <h5 class="card-header m-0 me-2 pb-3">All Category</h5>
                          
                         <div id="totalRevenueChart" class="px-2"></div>
                       </div>
@@ -368,7 +445,7 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                           </div>
                         </div>
                         <div id="growthChart"></div>
-                        <div class="text-center fw-semibold pt-3 mb-2"> Company Growth</div>
+                        <div class="text-center fw-semibold pt-3 mb-2">Gross Profit Margin</div>
 
                         <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
                           <div class="d-flex">
@@ -377,7 +454,7 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                             </div>
                             <div class="d-flex flex-column">
                               <small>Sales</small>
-                              <h6 class="mb-0">&#8377;32.5k</h6>
+                              <h6 class="mb-0">&#8377;<?php echo $sales?></h6>
                             </div>
                           </div>
                           <div class="d-flex">
@@ -386,7 +463,7 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                             </div>
                             <div class="d-flex flex-column">
                               <small>Costing</small>
-                              <h6 class="mb-0">&#8377;41.2k</h6>
+                              <h6 class="mb-0">&#8377;<?php echo $cost ?></h6>
                             </div>
                           </div>
                         </div>
@@ -408,7 +485,7 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1 text-center">Code Scanned</span><br>
-                          <h3 class="card-title mb-2 text-center">23</h3>
+                          <h3 class="card-title mb-2 text-center"><?php echo $scan_total ?></h3>
 
 
 
@@ -447,8 +524,8 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                       <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">Order Statistics</h5>
-                        <small class="text-muted">42.82k Total Sales</small>
+                        <h5 class="m-0 me-2">Category Statistics</h5>
+                        <small class="text-muted">&#8377;<?php echo $sales ?> Total Sales</small>
                       </div>
                       <div class="dropdown">
                         <button
@@ -461,17 +538,12 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                         >
                           <!-- <i class="bx bx-dots-vertical-rounded"></i> -->
                         </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                          <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                        </div>
                       </div>
                     </div>
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="d-flex flex-column align-items-center gap-1">
-                          <h2 class="mb-2">8,258</h2>
+                          <h2 class="mb-2"><?php echo $total_order ?></h2>
                           <span>Total Orders</span>
                         </div>
                         <div id="orderStatisticsChart"></div>
@@ -486,10 +558,10 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
                               <h6 class="mb-0">Food & Beverages</h6>
-                              <small class="text-muted">Mobile, Earbuds, TV</small>
+                              <small class="text-muted"></small>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold">20</small>
+                              <small class="fw-semibold"><?php echo $first_category ?></small>
                             </div>
                           </div>
                         </li>
@@ -500,10 +572,9 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
                               <h6 class="mb-0">Healthcare</h6>
-                              <small class="text-muted">T-shirt, Jeans, Shoes</small>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold">15</small>
+                              <small class="fw-semibold"><?php echo $second_category ?></small>
                             </div>
                           </div>
                         </li>
@@ -514,7 +585,6 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
                               <h6 class="mb-0">Dairy Products</h6>
-                              <small class="text-muted">Fine Art, Dining</small>
                             </div>
                             <div class="user-progress">
                               <small class="fw-semibold">8</small>
@@ -528,13 +598,26 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
                               <h6 class="mb-0">Beauty and hygiene</h6>
-                              <small class="text-muted">Fine Art, Dining</small>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold">849</small>
+                              <small class="fw-semibold"><?php echo $third_category ?></small>
                             </div>
                           </div>
                         </li>
+                        <li class="d-flex mb-4 pb-1">
+                          <div class="avatar flex-shrink-0 me-3">
+                            <span class="avatar-initial rounded bg-label-info"><i class="bx bx-mobile-alt"></i></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-0">Electronic Appliance</h6>
+                            </div>
+                            <div class="user-progress">
+                              <small class="fw-semibold"><?php echo $fifth_category ?></small>
+                            </div>
+                          </div>
+                        </li>
+                        
                         <li class="d-flex">
                           <div class="avatar flex-shrink-0 me-3">
                             <span class="avatar-initial rounded bg-label-secondary"
@@ -544,10 +627,9 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
                               <h6 class="mb-0">Others</h6>
-                              <small class="text-muted">Football, Cricket Kit</small>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold">99</small>
+                              <small class="fw-semibold"><?php echo $fourth_category ?></small>
                             </div>
                           </div>
                         </li>
@@ -622,126 +704,7 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
                 </div>
                 <!--/ Expense Overview -->
 
-                <!-- Transactions -->
-                <!-- <div class="col-md-6 col-lg-4 order-2 mb-4">
-                  <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                      <h5 class="card-title m-0 me-2">Transactions</h5>
-                      <div class="dropdown">
-                        <button
-                          class="btn p-0"
-                          type="button"
-                          id="transactionID"
-                          data-bs-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-                          <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <ul class="p-0 m-0">
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/paypal.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Paypal</small>
-                              <h6 class="mb-0">Send money</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">+82.6</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/wallet.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Wallet</small>
-                              <h6 class="mb-0">Mac'D</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">+270.69</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/chart.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Transfer</small>
-                              <h6 class="mb-0">Refund</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">+637.91</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/cc-success.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Credit Card</small>
-                              <h6 class="mb-0">Ordered Food</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">-838.71</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/wallet.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Wallet</small>
-                              <h6 class="mb-0">Starbucks</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">+203.33</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/cc-warning.png" alt="User" class="rounded" />
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <small class="text-muted d-block mb-1">Mastercard</small>
-                              <h6 class="mb-0">Ordered Food</h6>
-                            </div>
-                            <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0">-92.45</h6>
-                              <span class="text-muted">USD</span>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div> -->
-                <!--/ Transactions -->
+              
               </div>
             </div>
             <!-- / Content -->
@@ -789,7 +752,7 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
 
 
       // company growth circular chart
-      var sIndex = 100;
+      var sIndex = <?php echo $growth_margin ?>;
 
       // Days of sales (id = expensesOfWeek) 
       var dIndex = 25;
@@ -799,21 +762,22 @@ $sql = "SELECT * FROM manufacturer WHERE uid= $id";
       var dataIndex = [0, 15, 30, 40, 20, 30, 10, 50];
 
       //Market Place and Category
-      // labels: ['Food-Beverages', 'Healthcare', 'Dairy-Products', 'Beauty-hygiene']
-      var mcIndex = [10, 15, 8, 8];
+      // labels: ['Food-Beverages', 'Healthcare', 'Dairy-Products', 'Electronic Appliance'    , 'Beauty-hygiene']
+      var mcIndex = [<?php echo $first_category?>,<?php echo $second_category?>,<?php echo $third_category?>,<?php echo $fourth_category?>,<?php echo $fifth_category?>];
 
       // Company Growth (id = totalRevenueChart )
       // cgIndex1 = 2021 , cgIndex2 = 2022, 
       // jan feb mar apr may jun jul
-      var cgIndex1 = [0, 4, 7, 5, 12, 0, 0];
-      var cgIndex2 = [0, -9, -4, -5, -1, 0, 0];
-
+      var cgIndex1 = [<?php echo $first_category?>,<?php echo $second_category?>,<?php echo $third_category?>,<?php echo $fourth_category?>];
+      // var cgIndex2 = [0, -9, -4, -5, -1, 0, 0];
+      var total = [<?php echo $total_product?>];
       //mini line graph (id = profileReportChart)
       random1 = Math.floor(Math.random() * 5);
       random2 = Math.floor(Math.random() * 5);
 
       var prIndex = [0,random,random1,random2,random2,0];
 
+      
     </script>
 
 

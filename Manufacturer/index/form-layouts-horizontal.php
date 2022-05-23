@@ -318,7 +318,8 @@ if(isset($_POST['submit']))
                               <option value="1">Food & Beverages</option>
                               <option value="2">Healthcare</option>
                               <option value="3">Beauty & Hygiene</option>
-                              <option value="4">Others</option>
+                              <option value="4">Electronic & Appliance</option>
+                              <option value="5">Others</option>
 
                             </select>
                           </div>

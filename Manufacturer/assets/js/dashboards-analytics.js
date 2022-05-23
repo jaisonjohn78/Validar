@@ -18,13 +18,13 @@
     totalRevenueChartOptions = {
       series: [
         {
-          name: '2022',
-          data: [cgIndex1[0],cgIndex1[1],cgIndex1[2],cgIndex1[3],cgIndex1[4],cgIndex1[5],cgIndex1[6]]
+          name: 'Categories',
+          data: [cgIndex1[0],cgIndex1[1],cgIndex1[2],cgIndex1[3],cgIndex1[4]]
         },
-        {
-          name: '2021',
-          data: [cgIndex2[0],cgIndex2[1],cgIndex2[2],cgIndex2[3],cgIndex2[4],cgIndex2[5],cgIndex2[6]]
-        }
+        // {
+        //   name: '2021',
+        //   data: [cgIndex2[0],cgIndex2[1],cgIndex2[2],cgIndex2[3],cgIndex2[4],cgIndex2[5],cgIndex2[6]]
+        // }
       ],
       chart: {
         height: 300,
@@ -78,10 +78,10 @@
         }
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: ['Food & Beverages','Healthcare','Beauty and hygiene', 'Electronic Appliance' ,'Others'],
         labels: {
           style: {
-            fontSize: '13px',
+            fontSize: '10px',
             colors: axisColor
           }
         },
@@ -279,7 +279,7 @@
   const growthChartEl = document.querySelector('#growthChart'),
     growthChartOptions = {
       series: [sIndex],
-      labels: ['Growth'],
+      labels: ['Gross profit'],
       chart: {
         height: 240,
         type: 'radialBar'
@@ -427,7 +427,7 @@
         width: 130,
         type: 'donut'
       },
-      labels: ['Food-Beverages', 'Healthcare', 'Dairy-Products', 'Beauty-hygiene'],
+      labels: ['Food-Beverages', 'Healthcare', 'Beauty-hygiene' , 'Others'],
       series: [mcIndex[0], mcIndex[1], mcIndex[2], mcIndex[3]],
       colors: [config.colors.primary, config.colors.success, config.colors.info, config.colors.warning],
       stroke: {
@@ -462,7 +462,7 @@
                 color: headingColor,
                 offsetY: -15,
                 formatter: function (val) {
-                  return parseInt(val) + '%';
+                  return parseInt(val) ;
                 }
               },
               name: {
@@ -473,9 +473,9 @@
                 show: true,
                 fontSize: '0.8125rem',
                 color: axisColor,
-                label: 'Market',
+                label: 'Total Product',
                 formatter: function (w) {
-                  return '38%';
+                  return total[0];
                 }
               }
             }

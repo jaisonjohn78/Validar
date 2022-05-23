@@ -27,6 +27,7 @@ error_reporting(0);
     }
     header {
      position: fixed;
+     width: 100vw;
     }
     .categories.section-wrapper {
         /* position: sticky; */
@@ -88,31 +89,67 @@ error_reporting(0);
   
        
     }
-    .main-wrapper .item1 {
-        position: relative;
+    .main-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         text-align: center;
-        width: 100%;
+        margin: 20px auto;
+        
+        width: fit-content;
         height: 12vh;
-        background-color: #3AA3FF;
+        background-color: rgb(250, 63, 94);
         box-shadow:  5px 5px 10px #777777d5,
              -5px -5px 10px #ffffff91;
-        border-radius: 20px;
-        padding: 10px 20px;
-        left: -60px;
+        border-radius: 10px;
+        padding: 10px 2rem;
     }
-    .main-wrapper .item2 {
-        position: relative;
-        text-align: center;
-        width: 100%;
-        height: 12vh;
-        background-color: #3AA3FF;
-        box-shadow:  5px 5px 10px #777777d2,
-             -5px -5px 10px #ffffff94;
-        border-radius: 20px;
-        padding: 10px 20px;
-        margin-top: 18px;
-        right: -90px;
+    .item1 h1 {
+        -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: black;
     }
+    .circles {
+        position: absolute;
+        z-index: -1;
+        right: -200px;
+        top: 0;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+        background-size: 400% 400%;
+        animation: gradientBG 8s ease infinite;
+    }
+    .circles::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: -100%;
+        top: 50%;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background-image: linear-gradient(to right top, #d756d7, #ff5595, #ff865a, #f8bc3e, #c0e868);
+        background-size: 400% 400%;
+        animation: gradientBG 8s ease infinite;
+        
+
+    }
+    @keyframes gradientBG {
+        0% {
+            background-position: 0% 50%;
+
+        }
+        50% {
+            background-position: 100% 50%;
+            transform: translate(0, -5%);
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+        
     </style>
     <body>
     <!-- <div class="splash">
@@ -122,21 +159,19 @@ error_reporting(0);
     <header>
         <nav>
             <div class="info">
-                <p>Welcome <?php echo $row['full_name']; ?> !</p>
+                <h2 style="color: white;">Welcome <?php echo $row['full_name']; ?> !</h2>
                 <p>Let's Keep Track on your Expenses</p>
             </div>
-            <div class="img" style="background-image: url(img/user.png)"></div>
         </nav>
         <section>
             <div class="main-wrapper">
                 <div class="item1">
                     <h1>&#8377; 5000/-</h1>
-                </div>
-                <div class="item2">
-                    <h1>&#8377; 5000/-</h1>
+                    <p>Total Expenses</p>
                 </div>
             </div>
         </section>
+        <div class="circles"></div>
     </header>
      
         
@@ -164,6 +199,10 @@ error_reporting(0);
         <div class="category-item">
             <div class="item-img exp-ratio-category">&#8377; <?php echo $row['beauty']; ?></div>
             <h4>Beauty & Hygiene</h4>
+        </div>
+        <div class="category-item">
+            <div class="item-img exp-ratio-category">&#8377; <?php echo $row['electronic']; ?></div>
+            <h4>Electronic Appliance</h4>
         </div>
         <div class="category-item">
             <div class="item-img exp-ratio-category">&#8377; <?php echo $row['others']; ?></div>
