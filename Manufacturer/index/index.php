@@ -11,17 +11,23 @@ $result = mysqli_query($con,$sql);
 $row=mysqli_fetch_assoc($result);
 $sales = $row['sales'];
 $cost = $row['cost'];
-$profit = $sales - $cost;
-$profit_per = $profit/100;
+
+$gross_profit = mysqli_query($con,"SELECT SUM(price) AS price,sum(cost) as cost,sum(gst) as gst FROM `product` WHERE id IN(select p_id from units where status = 0)");
+$gross_row=mysqli_fetch_assoc($gross_profit);
+   $total_price =  $gross_row['price'];
+   $total_cost = $gross_row['cost'];
+   $gst = $gross_row['gst'];
+   $profit = $total_price - $total_cost;
+   $profit_per = $profit/100;
 if($sales == 0 && $cost == 0){
-  $growth_margin = 0; 
+  $gross_profit = 0; 
 } else {
   if($sales == 0) {
-    $growth_margin = 0;
+    $gross_profit = 0;
   } else {
-    $growth_margin = sprintf('%.2f',($sales-$cost)/$sales*100);
-    if($growth_margin < 0){
-      $growth_margin = 0;
+    $gross_profit = sprintf('%.2f',($total_price - $total_cost)/$total_price*100);
+    if($gross_profit < 0){
+      $gross_profit = 0;
     }
   } 
 }
@@ -74,6 +80,17 @@ $location_row=mysqli_fetch_assoc($location_res);
 // $latitude = $location_row['latitude'];
 // $longitude = $location_row['longitude'];
 
+$chart_res=mysqli_query($con,"SELECT units,timestamp,id,uid FROM product where uid=$id ORDER BY timestamp DESC limit 6 ");                                    // die();
+                $i=1;
+                while($chart_row=mysqli_fetch_assoc($chart_res)){
+                  $units[] = $chart_row['units'];
+                  $timestamp[] = $chart_row['timestamp'];
+                }
+              
+$get_users = "SELECT SUM(units) AS units FROM product where uid = $id";
+$get_exec = mysqli_query($con, $get_users);
+$row_get = mysqli_fetch_assoc($get_exec);
+$total_units = $row_get['units'];
 ?>
 
 <!DOCTYPE html>
@@ -314,7 +331,7 @@ $location_row=mysqli_fetch_assoc($location_res);
                         <div class="card-body">
                           <h5 class="card-title text-primary">Congratulations <?php echo $row['full_name']; ?>! 🎉</h5>
                           <p class="mb-4">
-                            You have done <span class="fw-bold"><?php echo $growth_margin ?>%</span> more sales today. You can check and keep track on your products
+                            You have done <span class="fw-bold"><?php echo $gross_profit ?>%</span> more sales today. You can check and keep track on your products
                           </p>
 
                           <a href="javascript:;" class="btn btn-sm btn-outline-primary">View my products</a>
@@ -752,15 +769,16 @@ $location_row=mysqli_fetch_assoc($location_res);
 
 
       // company growth circular chart
-      var sIndex = <?php echo $growth_margin ?>;
+      var sIndex = <?php echo $gross_profit ?>;
 
       // Days of sales (id = expensesOfWeek) 
-      var dIndex = 25;
+      var dIndex =  <?php echo $total_units ?>;;
 
       // big line graph x axis (6) (id = incomeChart)
-      var cIndex = ["", "3April", "4April", "5April", "6April", "7April", "8April", "Predection"];
-      var dataIndex = [0, 15, 30, 40, 20, 30, 10, 50];
-
+      var cIndex = <?php echo json_encode($timestamp) ?>;
+      cIndex.unshift("");
+      var dataIndex = <?php echo json_encode($units)?>;
+      dataIndex.unshift(0);
       //Market Place and Category
       // labels: ['Food-Beverages', 'Healthcare', 'Dairy-Products', 'Electronic Appliance'    , 'Beauty-hygiene']
       var mcIndex = [<?php echo $first_category?>,<?php echo $second_category?>,<?php echo $third_category?>,<?php echo $fourth_category?>,<?php echo $fifth_category?>];

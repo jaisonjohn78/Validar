@@ -494,6 +494,7 @@
     incomeChartConfig = {
       series: [
         {
+          name: 'Units',
           data: [dataIndex[0],dataIndex[1],dataIndex[2],dataIndex[3],dataIndex[4],dataIndex[5],dataIndex[6],dataIndex[7]],
         }
       ],
