@@ -10,6 +10,11 @@ error_reporting(0);
     $sql = "SELECT * FROM users WHERE id='" . $_SESSION["user_id"] . "'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
+
+    $sum_sql = "SELECT sum(food + health + dairy + beauty + electronic + others) AS total FROM users WHERE id='" . $_SESSION["user_id"] . "'";
+    $sum_result = mysqli_query($conn, $sum_sql);
+    $sum_row = mysqli_fetch_assoc($sum_result);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +25,13 @@ error_reporting(0);
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="assets/jquery.min.js"></script>
+    <script src="assets/app.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="img/android/android-launchericon-96-96.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#34a9e0">
+    <meta name="theme-color" content="#34a9e0">
+
     </head>
     <style>
     body {
@@ -102,7 +114,7 @@ error_reporting(0);
         box-shadow:  5px 5px 10px #777777d5,
              -5px -5px 10px #ffffff91;
         border-radius: 10px;
-        padding: 10px 2rem;
+        padding: 10px 3.5rem;
     }
     .item1 h1 {
         -webkit-text-fill-color: white; /* Will override color (regardless of order) */
@@ -166,7 +178,7 @@ error_reporting(0);
         <section>
             <div class="main-wrapper">
                 <div class="item1">
-                    <h1>&#8377; 5000/-</h1>
+                    <h1>&#8377; <?php echo $sum_row['total']; ?>/-</h1>
                     <p>Total Expenses</p>
                 </div>
             </div>
@@ -240,9 +252,9 @@ error_reporting(0);
 <script>
 
 $(document).ready(function(){
-    if (screen.width >= 700) {
-    document.location = "mobile_ui.html";
-    }
+    // if (screen.width >= 300) {
+    // document.location = "mobile_ui.html";
+    // }
     $("html, body").animate({ scrollTop: 0 }, "slow");
     $(".splash").delay(2000).fadeOut(1000);
     return false;
