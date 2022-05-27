@@ -242,7 +242,7 @@ main {
 .bottom-main {
     background: var(--main-color);
     display: flex;
-    justify-content: space-between;
+    justify-content:space-around;
     padding: 0.5rem 3rem;
     border-radius: 20% 20% 0px 0px;
     z-index: 10;
@@ -577,3 +577,8 @@ main {
     margin-right: .5rem;
     color: orange;
 }
+
+/* profile.php css*/
+
+
+/* profile.php css finish */

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Validar-Make a Shopping List</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web">
+    <link rel="stylesheet" href="font-awesome.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+       <link rel="stylesheet" href="style.css">
+       
+   
+
+   
+  
+    <style>
+        :root {
+    --main-color: #34a9e0;
+    --main-light: #BEE7CF;
+    --accent-light: #F4E3B3;
+}
+        /* ------------ youtube.com/CodeExplained ------------ */
+body{
+    padding: 0;
+    margin: 0;
+    background-color: rgba(0,0,0,0.1);
+    font-family: 'Titillium Web', sans-serif;
+}
+
+/* ------------ container ------------ */
+.container{
+    padding:10px;
+    margin-left: 12px;
+    display: block;
+    /* width:380px; */
+  
+}
+
+/* ------------ header ------------ */
+.header{
+    /* width: 380px;*/
+   height:200px;  
+   margin-left: 12px;
+    width:90vw;
+    /* background-image: url('../Manufacturer/assets/img/favicon/favicon-32x32.png'); */
+    background-color: #FFF;
+    background-size: 100% 200%;
+    background-repeat: no-repeat;
+    border-radius: 15px 15px 0 0;
+    position: relative;
+}
+.clear{
+    width : 1.5rem;
+    height: 1.2rem;
+    position: absolute;
+    right:20px;
+    top: 20px;
+}
+.clear i{
+    font-size: 2rem;
+    color: #FFF;
+}
+.clear i:hover{
+    cursor: pointer;
+    text-shadow: 1px 3px 5px #000;
+    transform: rotate(45deg);
+}
+#date{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    top:200px;
+    color:rgb(9, 156, 9);
+    font-size: 2rem;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+/* ------------ content ------------ */
+.content{
+    /* /* width:380px; */
+    height: 350px; 
+    margin-left: 12px;
+    width: 90vw;
+    height: auto;
+    max-height:350px;
+    background-color: #FFF;
+    overflow: auto;
+}
+.content::-webkit-scrollbar { 
+    display: none; 
+}
+.content ul{
+    padding:0;
+    margin:0;
+}
+.item{
+    /* width:380px; */
+    width: 90vw;
+    /* height: 45px; */
+    height: 5rem;
+
+    min-height: 4rem;
+    position: relative;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.item i.co{
+    position: absolute;
+    font-size: 1.5rem;
+    padding-left:5px;
+    left:15px;
+    top:10px;
+}
+.item i.co:hover{
+    cursor: pointer;
+}
+.fa-check-circle{
+    color:#6eb200;
+}
+.item p.text{
+    position: absolute;
+    padding:0;
+    margin:0;
+    font-size: 2.3rem;
+    left:50px;
+    top:5px;
+    background-color: #FFF;
+    max-width:285px;
+}
+.lineThrough{
+    text-decoration: line-through;
+    color : #ccc;
+}
+.item i.de{
+    position: absolute;
+    font-size: 2.1rem;
+    right:15px;
+    top:10px;
+}
+.item i.de:hover{
+    color:#af0000;
+    cursor: pointer;
+}
+/* ------------ add item ------------ */
+.add-to-do{
+    position: relative;
+    /* width: 360px; */
+    width: 90vw;
+    height:65px;
+    margin-left: 12px;
+    background-color: #FFF;
+    padding: 10px;
+   
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+.add-to-do i{
+    position: absolute;
+    font-size: 2rem;
+    color: #4162f6;
+}
+
+.add-to-do input{
+    position: absolute;
+    left: 50px;
+    /* height: 35px; */
+    height: 2rem;
+    /* width: 310px; */
+    /* width: 100%; */
+    margin-bottom: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    padding-left:10px;
+}
+.add-to-do input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #4162f6;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 2rem;
+}
+.add-to-do input::-moz-placeholder { /* Firefox 19+ */
+    color: #4162f6;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 2rem;
+}
+.add-to-do input:-ms-input-placeholder { /* IE 10+ */
+    color: #4162f6;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 2rem;
+}
+.add-to-do input:-moz-placeholder { /* Firefox 18- */
+    color: #4162f6;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 2rem;
+}
+
+/* Bottom navbar css */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.bottom-main {
+    background: var(--main-color);
+    display: flex;
+    justify-content:space-around;
+    padding: 0.5rem 3rem;
+    border-radius: 20% 20% 0px 0px;
+    z-index: 10;
+
+}
+
+.bottom-inner {
+    position: relative;
+}
+
+.nav-item-main {
+    background: #f1f1f1;
+    height: 150px;
+    width: 150px;
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    padding: .3rem;
+    border-radius: 50%;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+}
+
+.nav-item-main:hover {
+    
+}
+
+.nav-item-main div {
+    border: 7px solid var(--main-color);
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+}
+
+.nav-item-main span {
+    font-size: 1.9rem;
+    color: var(--main-color);
+}
+
+.nav-items {
+    display: flex;
+}
+
+.nav-item {
+    margin-right: 2.3rem;
+    text-align: center;
+}
+
+.nav-item:last-child {
+    margin-right: 0rem;
+}
+
+.nav-item span {
+    display: block;
+    color: #fff;
+    font-size: 3.6rem;
+    margin-bottom: .3rem;
+    transition: font-size 100ms;
+}
+
+.nav-item:hover span {
+    font-size: 1.7rem;
+}
+
+.nav-item p {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+
+/* Bottom navbar css finish */
+
+
+
+/* media query */
+
+/* @media only screen and(max-width:768px){
+    .content{
+    background-color: #4162f6;
+    }
+} */
+/* media query finish*/ 
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="../Manufacturer/assets/img/favicon/android-chrome-192x192.png" alt="" style="display:flex; margin:auto">
+            <div class="clear">
+                <i class="fa fa-refresh"></i>
+            </div>
+            <div id="date"></div>
+        </div>
+        <div class="content">
+            <ul id="list">
+                <li class="item">
+                    <!-- <i class="fa fa-circle-thin co" job="complete" id="0"></i> -->
+                    <!-- <p class="text">Drink Coffee</p> -->
+                    <!-- <i class="fa fa-trash-o de" job="delete" id="0"></i>  -->
+                </li> 
+            </ul>
+        </div>
+        <div class="add-to-do">
+            <i class="fa fa-plus-circle"></i>
+            <input type="text" id="input" placeholder="Add a to-do">
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="bottom-inner">
+            <div class="bottom-main" style="justify-content:space-around;">
+                <a href="index.php" style="text-decoration:none"><div class="nav-items">
+                    <div class="nav-item">
+                        <span class="las la-home"></span>
+                        <p>Home</p>
+                    </div>
+                </div></a>
+
+                <a href="qrcode.php"style="text-decoration:none;font-size:4rem;">
+                <div class="nav-item-main">
+                    <div>
+                        <span class="las la-qrcode" style="font-size:3rem" ></span>
+                    </div>
+                </div></a>
+
+                <a href="" style="text-decoration:none"><div class="nav-items">
+                    <div class="nav-item">
+                        <span class="las la-user"></span>
+                        <p>More</p>
+                    </div>
+                </div></a>
+            </div>
+        </div>
+    </div>
+ 
+    <script src="scripts.js"></script>
+</body>
+</html>
