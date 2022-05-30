@@ -19,9 +19,11 @@
 
   
 
-    $sub_get_id = substr($get_id,0,strlen($get_id)-1);
+    $sub_get_id = substr($get_id,0,6);
    
-    
+    $msg= "This Product is Valid ! You can Buy this product.";
+    $valid_msg="Valid";
+
     $sql = "SELECT * FROM product WHERE `qr_code`=$sub_get_id";
 	$result = mysqli_query($conn, $sql);
 	$row = mysqli_fetch_assoc($result);
@@ -86,18 +88,18 @@
        $new_sales = $old_sales + $row['price'];
  
    
-       $qr_code=mysqli_query($conn,"SELECT amount,count,product_name,qr_code FROM cart WHERE product_name = '$product_name'");
+       $today = date("Y-m-d");
+       $qr_code=mysqli_query($conn,"SELECT amount,count,product_name,qr_code,timestamp FROM cart WHERE product_name = '$product_name' AND timestamp = '$today'");
        $qr_result =mysqli_fetch_assoc($qr_code);
        $product_name1 = $qr_result['product_name'];
        $count = $qr_result['count'];
-    //    $up_qr_code = $qr_result['qr_code'];
+       $timestamp = $qr_result['timestamp'];
        $amount = $qr_result['amount'];
        $up_amount = $amount + $product_price;
        $up_count = $count + 1;
-       date_default_timezone_set("Asia/Kolkata");
-       $today = date("Y-m-d");
+       
 
-       if($product_name == $product_name1){
+       if($product_name == $product_name1 && $timestamp == $today){
            mysqli_query($conn,"UPDATE cart SET `amount` = '$up_amount',`count`='$up_count',`timestamp`='$today' WHERE product_name = '$product_name1'");
            header("location: qrcode.php?id=".$get_id."");
        }else{

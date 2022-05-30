@@ -173,7 +173,7 @@ $user_id= $_SESSION["user_id"];
                     </div>
                 </div></a>
 
-                <a href=""><div class="nav-items">
+                <a href="profile.html"><div class="nav-items">
                     <div class="nav-item">
                         <span class="las la-user"></span>
                         <p>More</p>

@@ -240,7 +240,7 @@ error_reporting(0);
                 </div>
             </div></a>
 
-            <a href="profile.php"><div class="nav-items">
+            <a href="profile.html"><div class="nav-items">
                 <div class="nav-item">
                     <span class="las la-info"></span>
                     <p>About</p>

@@ -709,7 +709,7 @@ $total_units = $row_get['units'];
                             </div>
                             <div>
                               <a href="">
-                              <h2 class="mb-n1 mt-1">Sales Per Day</h2>
+                              <h2 class="mb-n1 mt-1">Units Last 6 Days</h2>
                               <small class="text-muted">Click me to reset the graph <br> or drag right to left </small>
                             </a>
                             </div>
