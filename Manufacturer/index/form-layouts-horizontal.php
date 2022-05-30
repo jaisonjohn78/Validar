@@ -37,7 +37,7 @@ if(isset($_POST['submit']))
     if (move_uploaded_file($product_img_tmp, $folder)) {
       $msg = "Image uploaded successfully";
 
-      $query = mysqli_query($con,"INSERT INTO `product` (`uid`,`qr_code`,`company_name`,`company_email`,`brand_name`,`product_name`,`product_img`,`category`,`price`,`gst`,`lic_num`,`main_usage`,`useurl`,`mfg_date`,`fssai_code`,`customer_care`,`ingredients`,`net_wt`,`units`,`exp_date`, `timestamp`) VALUES ($uid,'$qr_code','$company_name','$company_email','$brand_name','$product_name','$product_img','$category',$price,$gst,'$lic_num','$main_usage','$useurl','$mfg_date','$fssai_code','$customer_care','$ingredients', '$net_wt' ,$units,'$exp_date', '$today')") or die(mysqli_error($con));
+      $query = mysqli_query($con,"INSERT INTO `product` (`uid`,`qr_code`,`company_name`,`company_email`,`brand_name`,`product_name`,`product_img`,`category`,`price`,`gst`,`cost`,`lic_num`,`main_usage`,`useurl`,`mfg_date`,`fssai_code`,`customer_care`,`ingredients`,`net_wt`,`units`,`exp_date`, `timestamp`) VALUES ($uid,'$qr_code','$company_name','$company_email','$brand_name','$product_name','$product_img','$category',$price,$gst,$cost,'$lic_num','$main_usage','$useurl','$mfg_date','$fssai_code','$customer_care','$ingredients', '$net_wt' ,$units,'$exp_date', '$today')") or die(mysqli_error($con));
       $last_id = mysqli_insert_id($con);
       $total_cost = $cost * $units;
       $query = mysqli_query($con,"UPDATE `manufacturer` SET `cost`=cost+$total_cost WHERE `id` = '$uid'") or die(mysqli_error($con));
@@ -317,9 +317,10 @@ if(isset($_POST['submit']))
                               <option selected>Open this select Category</option>
                               <option value="1">Food & Beverages</option>
                               <option value="2">Healthcare</option>
-                              <option value="3">Beauty & Hygiene</option>
-                              <option value="4">Electronic & Appliance</option>
-                              <option value="5">Others</option>
+                              <option value="3">Dairy</option>
+                              <option value="4">Beauty & Hygiene</option>
+                              <option value="5">Electronic & Appliance</option>
+                              <option value="6">Others</option>
 
                             </select>
                           </div>
@@ -380,7 +381,7 @@ if(isset($_POST['submit']))
                                 type="text"
                                 name="gst"
                                 class="form-control"
-                                placeholder="Amount"
+                                placeholder="gst"
                                 
                               />
                               <span class="input-group-text">.00</span>
@@ -396,7 +397,7 @@ if(isset($_POST['submit']))
                                 type="text"
                                 name="cost"
                                 class="form-control"
-                                placeholder="Amount"
+                                placeholder="cost"
                                 
                               />
                               <span class="input-group-text">.00</span>

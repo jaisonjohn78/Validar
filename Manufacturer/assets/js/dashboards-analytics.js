@@ -19,7 +19,7 @@
       series: [
         {
           name: 'Categories',
-          data: [cgIndex1[0],cgIndex1[1],cgIndex1[2],cgIndex1[3],cgIndex1[4]]
+          data: [cgIndex1[0],cgIndex1[1],cgIndex1[2],cgIndex1[3],cgIndex1[4],cgIndex1[5]]
         },
         // {
         //   name: '2021',
@@ -78,7 +78,7 @@
         }
       },
       xaxis: {
-        categories: ['Food & Beverages','Healthcare','Beauty and hygiene', 'Electronic Appliance' ,'Others'],
+        categories: ['Food & Beverages','Healthcare','Dairy','Beauty and hygiene', 'Electronic Appliance' ,'Others'],
         labels: {
           style: {
             fontSize: '10px',
@@ -427,9 +427,9 @@
         width: 130,
         type: 'donut'
       },
-      labels: ['Food-Beverages', 'Healthcare', 'Beauty-hygiene' , 'Others'],
-      series: [mcIndex[0], mcIndex[1], mcIndex[2], mcIndex[3]],
-      colors: [config.colors.primary, config.colors.success, config.colors.info, config.colors.warning],
+      labels: ['Food-Beverages', 'Healthcare', 'Dairy','Beauty-hygiene','Electronics','Others'],
+      series: [mcIndex1[0], mcIndex1[1], mcIndex1[2], mcIndex1[3]],
+      colors: [config.colors.primary, config.colors.success, config.colors.info, config.colors.dark,config.colors.warning],
       stroke: {
         width: 5,
         colors: cardColor

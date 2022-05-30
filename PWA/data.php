@@ -4,8 +4,7 @@
    $user_id= $_SESSION["user_id"];
 
 
-   
- 
+
     $get_id = $_GET['id'];
 
     $flag='';
@@ -14,7 +13,6 @@
     }
     if($flag){
         echo "<script>alert('this is not a valid qr code'); window.location.href='qrcode.php';</script>";
-        
     }
 
   

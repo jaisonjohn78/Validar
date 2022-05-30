@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2022 at 11:09 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: May 30, 2022 at 12:19 PM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 8.0.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,8 +36,26 @@ CREATE TABLE `units` (
   `location` varchar(255) DEFAULT 'Not Yet Scanned	',
   `isp` varchar(255) DEFAULT NULL,
   `timestamp` varchar(255) DEFAULT NULL,
-  `status` enum('0','1') NOT NULL DEFAULT '1'
+  `status` enum('0','1') NOT NULL DEFAULT '1',
+  `last_location` varchar(255) NOT NULL,
+  `warning` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `units`
+--
+
+INSERT INTO `units` (`id`, `p_id`, `qr_code`, `scans`, `ip_address`, `location`, `isp`, `timestamp`, `status`, `last_location`, `warning`) VALUES
+(1, 1, '7390021', 0, 'Not Yet Scanned', 'Not Yet Scanned	', NULL, NULL, '1', '', 0),
+(2, 1, '7390022', 0, 'Not Yet Scanned', 'Not Yet Scanned	', NULL, NULL, '1', '', 0),
+(3, 1, '7390023', 0, 'Not Yet Scanned', 'Not Yet Scanned	', NULL, NULL, '1', '', 0),
+(4, 1, '7390024', 0, 'Not Yet Scanned', 'Not Yet Scanned	', NULL, NULL, '1', '', 0),
+(5, 1, '7390025', 0, 'Not Yet Scanned', 'Not Yet Scanned	', NULL, NULL, '1', '', 0),
+(6, 1, '7390026', 0, 'Not Yet Scanned', 'Not Yet Scanned	', NULL, NULL, '1', '', 0),
+(7, 1, '7390027', 0, 'Not Yet Scanned', 'Not Yet Scanned	', NULL, NULL, '1', '', 0),
+(8, 1, '7390028', 0, 'Not Yet Scanned', 'Not Yet Scanned	', NULL, NULL, '1', '', 0),
+(9, 1, '7390029', 0, 'Not Yet Scanned', 'Not Yet Scanned	', NULL, NULL, '1', '', 0),
+(10, 1, '73900210', 0, 'Not Yet Scanned', 'Not Yet Scanned	', NULL, NULL, '1', '', 0);
 
 --
 -- Indexes for dumped tables
@@ -57,7 +75,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

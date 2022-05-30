@@ -12,17 +12,18 @@ $row=mysqli_fetch_assoc($result);
 $sales = $row['sales'];
 $cost = $row['cost'];
 
-$gross_profit = mysqli_query($con,"SELECT SUM(price) AS price,sum(cost) as cost,sum(gst) as gst FROM `product` WHERE id IN(select p_id from units where status = 0)");
-$gross_row=mysqli_fetch_assoc($gross_profit);
+// $gross_profit = 0;
+$gross_profit_sql = mysqli_query($con,"SELECT SUM(price) AS price,sum(cost) as cost,sum(gst) as gst FROM `product` WHERE id IN(select p_id from units where status = 0)");
+$gross_row=mysqli_fetch_assoc($gross_profit_sql);
    $total_price =  $gross_row['price'];
    $total_cost = $gross_row['cost'];
    $gst = $gross_row['gst'];
    $profit = $total_price - $total_cost;
    $profit_per = $profit/100;
-if($sales == 0 && $cost == 0){
+if($total_price == '' && $total_cost == ''){
   $gross_profit = 0; 
 } else {
-  if($sales == 0) {
+  if($total_price == '') {
     $gross_profit = 0;
   } else {
     $gross_profit = sprintf('%.2f',($total_price - $total_cost)/$total_price*100);
@@ -58,6 +59,12 @@ $fourth = "SELECT count(category) AS category FROM product WHERE uid = $id AND c
 $fourth_res = mysqli_query($con,$fourth);
 $fourth_row=mysqli_fetch_assoc($fourth_res);
 $fourth_category = $fourth_row['category'];
+
+$six = "SELECT count(category) AS category FROM product WHERE uid = $id AND category = 6";
+$six_res = mysqli_query($con,$six);
+$six_row=mysqli_fetch_assoc($six_res);
+$six_category = $six_row['category'];
+
 
 $to_order = "SELECT sum(count) AS count FROM cart ";
 $order_result = mysqli_query($con,$to_order);
@@ -604,7 +611,7 @@ $total_units = $row_get['units'];
                               <h6 class="mb-0">Dairy Products</h6>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold">8</small>
+                              <small class="fw-semibold"><?php echo $third_category ?></small>
                             </div>
                           </div>
                         </li>
@@ -617,7 +624,7 @@ $total_units = $row_get['units'];
                               <h6 class="mb-0">Beauty and hygiene</h6>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold"><?php echo $third_category ?></small>
+                              <small class="fw-semibold"><?php echo $fifth_category ?></small>
                             </div>
                           </div>
                         </li>
@@ -630,7 +637,7 @@ $total_units = $row_get['units'];
                               <h6 class="mb-0">Electronic Appliance</h6>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold"><?php echo $fifth_category ?></small>
+                              <small class="fw-semibold"><?php echo $fourth_category ?></small>
                             </div>
                           </div>
                         </li>
@@ -646,7 +653,7 @@ $total_units = $row_get['units'];
                               <h6 class="mb-0">Others</h6>
                             </div>
                             <div class="user-progress">
-                              <small class="fw-semibold"><?php echo $fourth_category ?></small>
+                              <small class="fw-semibold"><?php echo $six_category ?></small>
                             </div>
                           </div>
                         </li>
@@ -781,13 +788,12 @@ $total_units = $row_get['units'];
       dataIndex.unshift(0);
       //Market Place and Category
       // labels: ['Food-Beverages', 'Healthcare', 'Dairy-Products', 'Electronic Appliance'    , 'Beauty-hygiene']
-      var mcIndex = [<?php echo $first_category?>,<?php echo $second_category?>,<?php echo $third_category?>,<?php echo $fourth_category?>,<?php echo $fifth_category?>];
 
       // Company Growth (id = totalRevenueChart )
       // cgIndex1 = 2021 , cgIndex2 = 2022, 
       // jan feb mar apr may jun jul
-      var cgIndex1 = [<?php echo $first_category?>,<?php echo $second_category?>,<?php echo $third_category?>,<?php echo $fourth_category?>];
-      // var cgIndex2 = [0, -9, -4, -5, -1, 0, 0];
+      var cgIndex1 = [<?php echo $first_category?>,<?php echo $second_category?>,<?php echo $third_category?>,<?php echo $fifth_category?>,<?php echo $fourth_category?>,<?php echo $six_category ?>];
+      var mcIndex1 = [<?php echo $first_category?>,<?php echo $second_category?>,<?php echo $third_category?>,<?php echo $fifth_category?>,<?php echo $fourth_category?>,<?php echo $six_category ?>];
       var total = [<?php echo $total_product?>];
       //mini line graph (id = profileReportChart)
       random1 = Math.floor(Math.random() * 5);

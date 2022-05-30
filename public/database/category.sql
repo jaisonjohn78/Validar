@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2022 at 11:08 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: May 30, 2022 at 12:19 PM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 8.0.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,10 +38,12 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `category`, `items`) VALUES
-(1, 'Food & Beverages', 0),
-(2, 'Healthcare', 0),
-(3, 'Beauty & Hygiene', 0),
-(4, 'Others', 0);
+(1, 'Food', 125),
+(2, 'Healthcare', 55),
+(3, 'dairy', 20),
+(4, 'Beauty', 25),
+(5, 'electronic', 5),
+(6, 'Others', 0);
 
 --
 -- Indexes for dumped tables
@@ -61,7 +63,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
