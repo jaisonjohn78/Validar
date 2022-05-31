@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2022 at 11:09 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: May 30, 2022 at 12:20 PM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 8.0.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,10 +34,11 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `expense` int(11) NOT NULL DEFAULT 0,
   `status` int(11) NOT NULL DEFAULT 1,
-  `food` int(11) NOT NULL DEFAULT 0,
-  `health` int(11) NOT NULL DEFAULT 0,
+  `Food` int(11) NOT NULL DEFAULT 0,
+  `Healthcare` int(11) NOT NULL DEFAULT 0,
   `dairy` int(11) NOT NULL DEFAULT 0,
-  `beauty` int(11) NOT NULL DEFAULT 0,
+  `Beauty` int(11) NOT NULL DEFAULT 0,
+  `electronic` int(11) NOT NULL DEFAULT 0,
   `others` int(11) NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -45,8 +46,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `expense`, `status`, `food`, `health`, `dairy`, `beauty`, `others`) VALUES
-(1, 'Jaison John', 'jaisonjohn78.com@gmail.com', '202cb962ac59075b964b07152d234b70', 0, 1, 0, 0, 0, 0, 0);
+INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `expense`, `status`, `Food`, `Healthcare`, `dairy`, `Beauty`, `electronic`, `others`) VALUES
+(1, 'hardik vekariy', 'hardikzz0409@gmail.com', '202cb962ac59075b964b07152d234b70', 0, 1, 0, 0, 0, 0, 0, 0);
 
 --
 -- Indexes for dumped tables

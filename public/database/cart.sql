@@ -24,34 +24,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `manufacturer`
+-- Table structure for table `cart`
 --
 
-CREATE TABLE `manufacturer` (
+CREATE TABLE `cart` (
   `id` int(11) NOT NULL,
-  `full_name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(225) NOT NULL,
-  `status` varchar(3) NOT NULL DEFAULT '1',
-  `sales` int(11) NOT NULL,
-  `cost` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `manufacturer`
---
-
-INSERT INTO `manufacturer` (`id`, `full_name`, `email`, `password`, `status`, `sales`, `cost`) VALUES
-(1, 'hardik vekariy', 'hardikzz0409@gmail.com', '202cb962ac59075b964b07152d234b70', '1', 0, 100);
+  `u_id` int(11) NOT NULL,
+  `qr_code` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `product_name` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `price` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `count` int(11) DEFAULT 1,
+  `timestamp` varchar(255) NOT NULL,
+  `latitude` varchar(255) NOT NULL,
+  `longitude` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `manufacturer`
+-- Indexes for table `cart`
 --
-ALTER TABLE `manufacturer`
+ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -59,10 +55,10 @@ ALTER TABLE `manufacturer`
 --
 
 --
--- AUTO_INCREMENT for table `manufacturer`
+-- AUTO_INCREMENT for table `cart`
 --
-ALTER TABLE `manufacturer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

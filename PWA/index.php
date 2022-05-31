@@ -11,7 +11,7 @@ error_reporting(0);
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
 
-    $sum_sql = "SELECT sum(food + health + dairy + beauty + electronic + others) AS total FROM users WHERE id='" . $_SESSION["user_id"] . "'";
+    $sum_sql = "SELECT sum(Food + Healthcare + dairy + Beauty + electronic + others) AS total FROM users WHERE id='" . $_SESSION["user_id"] . "'";
     $sum_result = mysqli_query($conn, $sum_sql);
     $sum_row = mysqli_fetch_assoc($sum_result);
 
@@ -197,11 +197,11 @@ error_reporting(0);
     Categories wise Expenses
     <div class="category-items">
         <div class="category-item">
-                <div class="item-img exp-ratio-category">&#8377; <?php echo $row['food']; ?></div>
+                <div class="item-img exp-ratio-category">&#8377; <?php echo $row['Food']; ?></div>
                 <h4>Food & Beverages</h4>
         </div>
         <div class="category-item">
-            <div class="item-img exp-ratio-category">&#8377; <?php echo $row['health']; ?></div>
+            <div class="item-img exp-ratio-category">&#8377; <?php echo $row['Healthcare']; ?></div>
             <h4>Healthcare</h4>
         </div>
         <div class="category-item">
@@ -209,7 +209,7 @@ error_reporting(0);
             <h4>Dairy Product</h4>
         </div>
         <div class="category-item">
-            <div class="item-img exp-ratio-category">&#8377; <?php echo $row['beauty']; ?></div>
+            <div class="item-img exp-ratio-category">&#8377; <?php echo $row['Beauty']; ?></div>
             <h4>Beauty & Hygiene</h4>
         </div>
         <div class="category-item">
@@ -240,7 +240,7 @@ error_reporting(0);
                 </div>
             </div></a>
 
-            <a href="profile.php"><div class="nav-items">
+            <a href="profile.html"><div class="nav-items">
                 <div class="nav-item">
                     <span class="las la-info"></span>
                     <p>About</p>
