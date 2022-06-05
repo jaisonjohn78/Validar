@@ -3,7 +3,7 @@
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$database = "Validar";
+$database = "validar";
 
 // $hostname = "sql103.epizy.com";
 // $username = "epiz_31513890";
